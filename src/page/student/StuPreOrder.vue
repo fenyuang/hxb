@@ -7,8 +7,8 @@
   </div>
   <div class="tab_bar_list">
     <ul>
-      <li><a v-bind:href="'#/StuInfo?id='+this.$route.query.id+'&uniacid='+StuPreOrder.uniacid+'&order_sn='+StuPreOrder.order_sn">基本信息</a></li>
-      <li class="active"><a v-bind:href="'#/StuPreOrder?id='+this.$route.query.id+'&uniacid='+StuPreOrder.uniacid+'&order_sn='+StuPreOrder.order_sn">预定订单</a></li>
+      <li><a v-bind:href="'#/StuInfo?id='+this.$route.query.id+'&amp;uniacid='+this.$route.query.uniacid">基本信息</a></li>
+      <li class="active"><a href="javascript:;">预定订单</a></li>
       <li><a href="javascript:;">推广信息</a></li>
     </ul>
   </div>
@@ -17,12 +17,12 @@
     <!--  tab3 -->
     <div class="tab2 tab3" >
       <div v-for="item in StuPreOrder ">
-           <a v-bind:href="'#/StuOrderInfo?id='+item.id+'&uniacid='+item.uniacid+'&order_sn='+item.order_sn">
+           <a v-bind:href="'#/StuOrderInfo?id='+item.id+'&amp;uniacid='+item.uniacid+'&amp;order_sn='+item.order_sn">
             <ul>
-              <li class="tab2_top"><span style="color: #333333">{{!!item.user_info&&item.user_info.realname}}</span><span>{{item.status==0?'已经预定':item.status==10?'已经支付':'已回访'}}</span></li>
-              <li class="tab2_bottom"><span>{{!!item.user_info&&item.user_info.tel}}</span><span>{{item.addtime}}</span></li>
+              <li class="tab2_top"><span style="color: #333333">{{item.user_info.realname}}</span><span>{{item.status==0?'已经预定':item.status==10?'已经支付':'已回访'}}</span></li>
+              <li class="tab2_bottom"><span>{{item.user_info.tel}}</span><span>{{item.addtime}}</span></li>
             </ul>
-          </a>  
+          </a>
       </div>
     </div>
   </div>
@@ -38,49 +38,41 @@ export default {
   data: function () {
     return {
       StuPreOrder: [],
-      StuPreOrdert: []
+      StuPreOrdert: {}
     }
   },
   mounted: function () {
-    this.getData()
-    this.getDatas()
+    this.getOrderList()
+    this.getUserInfo()
   },
   methods: {
-    getData: function () {
+    getOrderList: function () {
       var _this = this
       axios.get('http://hxb.scpoo.com/hxb/index.php/index/Courseorder/getList?uniacid=' + this.$route.query.uniacid)
       .then(function (rs) {
-        console.log(rs)
         rs = rs.data
-        console.log(rs.ret === 100)
         if (rs.ret === 100) {
           _this.StuPreOrder = rs.data
-          console.log(_this.StuPreOrder)
-          console.log(1)
         } else {
-
+          alert(rs.msg)
         }
       })
     },
-    getDatas: function () {
+    getUserInfo: function () {
       var _this = this
       axios.get('http://hxb.scpoo.com/hxb/index.php/index/user/user_select?id=' + this.$route.query.id)
       .then(function (rs) {
-        console.log(rs)
         rs = rs.data
-        console.log(rs.ret === 100)
         if (rs.ret === 100) {
           _this.StuPreOrdert = rs.data
-          console.log(_this.StuPreOrdert)
-          console.log(1)
         } else {
-
+          alert(rs.msg)
         }
       })
     }
   },
   components: {
-    HeaderNav
+    HeaderNav: HeaderNav
   }
 }
 </script>

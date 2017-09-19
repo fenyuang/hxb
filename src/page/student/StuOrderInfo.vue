@@ -46,25 +46,23 @@ export default {
   name: 'StuOrderInfo',
   data: function () {
     return {
-      StuOrderInfo: []
+      StuOrderInfo: {
+        user_info: {}
+      }
     }
   },
   mounted: function () {
-    this.getData()
+    this.getOrderInfo()
   },
   methods: {
-    getData: function () {
+    getOrderInfo: function () {
       var _this = this
       axios.post('http://hxb.scpoo.com/hxb/index.php/index/Courseorder/getInfo', {uniacid: this.$route.query.uniacid, order_sn: this.$route.query.order_sn})
       .then(function (rs) {
-        console.log(rs)
         rs = rs.data
-        console.log(rs.ret === 100)
         if (rs.ret === 100) {
           _this.StuOrderInfo = rs.data
-          console.log(_this.StuOrderInfo)
         } else {
-          console.log(1)
         }
       })
       .catch(function (error) {

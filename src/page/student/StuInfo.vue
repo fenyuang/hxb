@@ -2,14 +2,14 @@
 <HeaderNav :classify=0  :searchIcon=0>
 <div class="wrap" id="wrap_infor">
   <div class="name_infor">
-    <div class="pict_head"><img v-bind:src="StuInfo.headimgurl"></div>
+    <div class="pict_head"><img v-bind:src="StuInfo.headimgurl?StuInfo.headimgurl:headeImg"></div>
     <p class="p_one">{{StuInfo.realname}}</p>
-    <p class="p_two">已经回访,有意向</p>
+    <!-- <p class="p_two">已经回访,有意向</p> -->
   </div>
   <div class="tab_bar_list">
     <ul>
-      <li class="active"><a v-bind:href="'#/Stuinfo?id='+this.$route.query.id+'&uniacid='+StuInfo.uniacid">基本信息</a></li>
-      <li><a v-bind:href="'#/StuPreOrder?id='+this.$route.query.id+'&uniacid='+StuInfo.uniacid">预定订单</a></li>
+      <li class="active"><a href="javascript:;">基本信息</a></li>
+      <li><a v-bind:href="'#/StuPreOrder?id='+this.$route.query.id+'&amp;uniacid='+StuInfo.uniacid">预定订单</a></li>
       <li><a href="javascript:;">推广信息</a></li>
     </ul>
   </div>
@@ -55,11 +55,13 @@
 
 <script>
 import HeaderNav from '../../components/HeaderNav.vue'
+import base64 from './base64.js'
 import axios from 'axios'
 export default {
   name: 'StuInfo',
   data: function () {
     return {
+      headeImg: base64.headImg,
       StuInfo: {}
     }
   },
@@ -163,7 +165,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
   border: 1px solid red;
 }
 #wrap_infor .name_infor {
-  height: 5.25925926rem;
+  height: 4.25925926rem;
   background-color: #fff;
   padding-top: 0.55555556rem;
 }

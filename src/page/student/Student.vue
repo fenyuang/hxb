@@ -14,7 +14,7 @@
 		</ul>
 		<p><span>班级</span>&nbsp;{{item.course_data?item.course_data:'无数据'}}</p>
 		<div class="check">
-			<div class="check_skip"><a v-bind:href="'#/StuInfo?id='+item.id+'&uniacid='+item.uniacid">查看详情 &gt;</a></div>
+			<div class="check_skip"><a v-bind:href="'#/StuInfo?id='+item.id+'&amp;uniacid='+item.uniacid">查看详情&gt;</a></div>
 		</div>
 	</div>
 </div>
