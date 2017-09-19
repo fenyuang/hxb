@@ -10,7 +10,7 @@
 	<div v-for="item in students" class="content_list">
 		<ul>
 			<li class="left"><span class="name">{{item.realname}}/</span><span class="sex">{{item.sex==1?'男':'女'}}</span></li>
-			<li class="phone_number"><span>电话</span>&nbsp;&nbsp;<span class="tel">{{item.tel}}</span></li>
+			<li class="phone_number"><span>电话</span>&nbsp;&nbsp;<span class="tel">{{item.tel?item.tel:'无'}}</span></li>
 		</ul>
 		<p><span>班级</span>&nbsp;{{item.course_data?item.course_data:'无数据'}}</p>
 		<div class="check">
