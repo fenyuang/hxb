@@ -161,13 +161,13 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
   line-height: 0.55555556rem;
   margin-top: 0.51851852rem;
 }
-.spe {
+#wrap .spe {
   margin-right: 0!important;
 }
-.content_list {
+#wrap .content_list {
   background-color: #FFFFFF;
 }
-.content_list ul {
+#wrap .content_list ul {
   overflow: hidden;
   padding-top: 0.72222222rem;
   padding-bottom: 0.72222222rem;
@@ -179,47 +179,47 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 /*.content_list ul li {
   float: left;
 }*/
-.content_list p{
+#wrap .content_list p{
   margin: 0 auto;
   color: #333333;
   font-size: 0.44444444rem;
 }
-.content_list span {
+#wrap .content_list span {
   color: #999999;
 }
-.content_list li.left{width:3.519rem}
-.content_list li.right{}
-.content_list .name,.content_list .sex {
+#wrap .content_list li.left{width:3.519rem}
+#wrap .content_list li.right{}
+#wrap .content_list .name,.content_list .sex {
   font-size: 0.519rem;
   color: #333;
 }
-.wrap .content_list .phone_number {
+#wrap .content_list .phone_number {
   width: 4.67407407rem;
   font-size: 0.44444444rem;
   padding-right: 0.46296296rem;
 }
-.wrap .content_list .phone_number .tel{
+#wrap .content_list .phone_number .tel{
   color: #333;
 }
-.content_list .check {
+#wrap .content_list .check {
   position: relative;
   overflow: hidden;
   padding-bottom: 1rem;
 
 }
-.content_list .check .check_skip{position: absolute;
+#wrap .content_list .check .check_skip{position: absolute;
   right: 1rem;}
-.content_list .check .check_skip a{
+#wrap .content_list .check .check_skip a{
   width: 2.481rem;
   color: #333;
   display: inline-block;
   font-size: 0.419rem;
   height: 0.8rem;
 }
-.content_list p {
+#wrap .content_list p {
   margin-left: 0.72222222rem;
 }
-.line {
+#wrap .line {
   height: 0.37037037rem;
   background-color: #eeeeee;
 }
