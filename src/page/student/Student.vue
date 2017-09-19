@@ -13,9 +13,9 @@
 			<li class="phone_number"><span>电话</span>&nbsp;&nbsp;<span class="tel">{{item.tel}}</span></li>
 		</ul>
 		<p><span>班级</span>&nbsp;{{item.course_data?item.course_data:'无数据'}}</p>
-		<ul class="check">
-			<li class="check_skip"><a v-bind:href="'#/StuInfo?id='+item.id+'&uniacid='+item.uniacid">查看详情 &gt;</a></li>
-		</ul>
+		<div class="check">
+			<div class="check_skip"><a v-bind:href="'#/StuInfo?id='+item.id+'&uniacid='+item.uniacid">查看详情 &gt;</a></div>
+		</div>
 	</div>
 </div>
 </HeaderNav>
