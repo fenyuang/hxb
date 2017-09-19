@@ -150,7 +150,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
   -webkit-flex-flow: nowrap;
   justify-content: space-between;
 }
-.information_title ul li {
+#wrap .information_title ul li {
   float: left;
   font-size: 0.51851852rem;
   background: url(./img/trangle.png) no-repeat right center;
