@@ -4,9 +4,9 @@
 	<div class="information_title">
     <div class="search_box">
           <div class="input_lab" style="border:1px solid gray">
-            <input type="text" placeholder="请输入搜索内容" class="inputIn">
+            <input type="text" placeholder="请输入搜索内容" class="inputIn" v-model="message">
           </div>
-          <div class="picture "><a href="javascript:;"><img src="./img/search.png"></a></div>
+          <div class="picture "><a href="javascript:;" v-on:click="getDataSearch()"><img src="./img/search.png"></a></div>
      </div>
 	</div>
 	<div v-for="item in students" class="content_list">
@@ -30,6 +30,7 @@ export default {
   name: 'student',
   data: function () {
     return {
+      message: '',
       students: []
     }
   },
@@ -40,6 +41,22 @@ export default {
     getData: function () {
       var _this = this
       axios.get('http://hxb.scpoo.com/hxb/index.php/index/user/user_list')
+      .then(function (rs) {
+        rs = rs.data
+        console.log(rs.ret === 100)
+        if (rs.ret === 100) {
+          _this.students = rs.data
+        } else {
+
+        }
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+    },
+    getDataSearch: function () {
+      var _this = this
+      axios.get('http://hxb.scpoo.com/hxb/index.php/index/user/user_list?realnameandtel=' + _this.message)
       .then(function (rs) {
         rs = rs.data
         console.log(rs.ret === 100)
