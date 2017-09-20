@@ -2,10 +2,12 @@
 <HeaderNav v-bind:classify='0' v-bind:searchIcon='0'>
   <div id="wrap">
 	<div class="information_title">
-		<ul>
-			<li>学生姓名</li>
-			<li >手机号码</li>
-		</ul>
+    <div class="search_box">
+          <div class="input_lab" style="border:1px solid gray">
+            <input type="text" placeholder="请输入搜索内容" class="inputIn">
+          </div>
+          <div class="picture "><a href="javascript:;"><img src="./img/search.png"></a></div>
+     </div>
 	</div>
 	<div v-for="item in students" class="content_list">
 		<ul>
@@ -60,6 +62,11 @@ export default {
 </script>
 
 <style scoped>
+.search_box{position: relative;margin-top: 0.2rem;font-size:0.51851852rem; }
+.search_box input{padding-left: 0.2rem;}
+.search_box .picture{position: absolute;top: 11px ;right: 0px;}
+.search_box .input_lab{border-radius: 0.1rem;}
+
 @charset "utf-8";
 /* 仅添加需要重置reset的签 ---start---*/
 body,div,p,ul,li,a,dl,dt,dd,img,ol,input,table,tr,td,textarea,h1,h2,h3,h4,h5,h6,select {
@@ -79,7 +86,7 @@ q:before, q:after {
 	content:'';
 }
 body,button,input,select,textarea {
-	font:12px/1.5 SimSun, Helvetica, Tahoma, Arial, \5FAE\8F6F\96C5\9ED1, sans-serif;
+/*	font:12px/1.5 SimSun, Helvetica, Tahoma, Arial, \5FAE\8F6F\96C5\9ED1, sans-serif;*/
 	*line-height: 1.5;
 	-ms-overflow-style: scrollbar;  
 	color:#333;
@@ -139,7 +146,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
   border: 1px solid red;
 }
 #wrap .information_title {
-  height: 1.85185185rem;
+/*  height: 1.85185185rem;*/
   width: 100%;
   border-bottom: 0.37037037rem solid #eeeeee;
 }
@@ -224,4 +231,14 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
   background-color: #eeeeee;
 }
 .content_list{border-bottom:0.37037037rem solid #eee; }
+
+ .mui-search{margin-top: 0.47rem;font-size: 0.56rem;}
+ .mui-input-clear{height: 1rem;line-height: 1rem;}
+ .mui-search .mui-placeholder{line-height: 55px;}
+ .mui-search .mui-placeholder .mui-icon {
+    font-size: 30px !important ;  
+}
+#sp{font-size: 0.56rem;}
+
+ 
 </style>

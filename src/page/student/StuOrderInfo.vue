@@ -27,14 +27,14 @@
 			</tr>
 		</table>
 	</div>
-	<div class="bottom_line"></div>
-	<div class="order_spe">
+<!-- 	<div class="bottom_line"></div> -->
+<!-- 	<div class="order_spe">
 		<table>
 			<tr>
 				<td class="td_left">操作</td><td class="td_right">查看详情 ></td>
 			</tr>
 		</table>
-	</div>
+	</div> -->
 </div>
 </HeaderNav>
 </template>
@@ -83,7 +83,9 @@ body,div,p,ul,li,a,dl,dt,dd,img,ol,input,table,tr,td,textarea,h1,h2,h3,h4,h5,h6,
   margin: 0;
   padding: 0;
   outline: none;
+
 }
+html{ background-color: #fff!important;}
 address, caption, cite, code, dfn, em, th, var, i, samp {
   font-style:normal;
   font-weight:normal;
