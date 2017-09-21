@@ -15,8 +15,8 @@
     <div>
         <div class="j_power">
             <ul class="mid_title">
-              <li v-for="(tab,index) in tabsName">
-                  <a  class="tab-link" @click="tabsSwitch(index)" v-bind:class="{act:tab.isActive}">{{tab.name}}</a> 
+              <li v-for="(value,index) in tabsName">
+                  <a  class="tab-link" v-on:click="tabsSwitch(index)" v-bind:class="index==curIndex&&'act'">{{value}}</a> 
               </li>
 
        <!--          <li><a href="" class="act">角色管理</a></li>
@@ -28,7 +28,7 @@
 
         <!--     角色管理 -->
     <div class="cards"> 
-      <div class="tab_card" style="display:block" v-show='roleM === 0'>
+      <div class="tab_card" v-show='curIndex === 0'>
             <div class="tab2 tab3">
               <ul>
                   <li class="tab2_top">
@@ -68,7 +68,7 @@
       </div>  
 
           <!--    团队管理 -->
-      <div class="tab_card" style="display:block" v-show='roleM === 1'>
+      <div class="tab_card"  v-show='curIndex === 1'>
                <div class="tab2 tab3 tab4" >
               <ul>
                   <li class="tab2_top"><span style="color: #333333">付露</span><span>已经预定</span></li>
@@ -94,26 +94,16 @@
 <script>
 export default {
   name: '',
-  data () {
+  data: function () {
     return {
-      tabsName: [{
-        name: '角色管理',
-        isActive: true
-      },
-      {
-        name: '团队管理',
-        isActive: false
-      }
-      ],
-      act: false,
-      roleM: 0
-
+      tabsName: ['角色管理', '团队管理'],
+      curIndex: 0
     }
   },
   methods: {
-    tabsSwitch: function (tabIndex) {
-      console.log(tabIndex)
-      this.roleM = tabIndex
+    tabsSwitch: function (x) {
+      console.log(x)
+      this.curIndex = x
     }
   }
 }
@@ -556,5 +546,5 @@ ul li a {
   color: #93c971;
   font-size: 0.55555556rem;
 }
-.font_wryh .cards .tab_card{display: none;}
+/*.font_wryh .cards .tab_card{display: none;}*/
 </style>
