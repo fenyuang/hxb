@@ -6,7 +6,7 @@
           <div class="input_lab" style="border:1px solid gray">
             <input type="text" placeholder="请输入搜索内容" class="inputIn" v-model="message">
           </div>
-          <div class="picture "><a href="javascript:;" v-on:click="getDataSearch()"><img src="./img/search.png"></a></div>
+          <div class="picture "><a href="javascript:;" v-on:click="getDataSearch()"><img src="../../../static/images/search.png"></a></div>
      </div>
 	</div>
 	<div v-for="item in students" class="content_list">
@@ -177,7 +177,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 #wrap .information_title ul li {
   float: left;
   font-size: 0.51851852rem;
-  background: url(./img/trangle.png) no-repeat right center;
+  background: url(../../../static/images/trangle.png) no-repeat right center;
   background-size: 0.37037037rem;
   width: 2.55555556rem;
   margin-right: 0.74074074rem;

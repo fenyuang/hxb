@@ -1,4 +1,4 @@
-<template>
+``<template>
  <div class="add_school" id="ap_sch">
 	<div class="add_head">添加校区</div>
     <div class="add_content">
@@ -56,8 +56,8 @@
     	</table>
     	<div class="picture">
     		<ul>
-    			<li><img src="./img/picture.png"><span><a href=""></a></span></li>
-    			<li><img src="./img/picture.png"><span><a href=""></a></span></li>
+    			<li><img src="../../../static/images/picture.png"><span><a href=""></a></span></li>
+    			<li><img src="../../../static/images/picture.png"><span><a href=""></a></span></li>
     		</ul>
     	</div>
     </div>
@@ -233,7 +233,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
   display: block;
 	width: 0.741rem;
 	height: 0.741rem;
-	background:url(./img/delete.png) no-repeat;
+	background:url(../../../static/images/delete.png) no-repeat;
 	background-size: 0.741rem;float: right;margin-right: 0.611rem;margin-top: 0.37rem;
    }
 

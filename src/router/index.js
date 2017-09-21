@@ -46,6 +46,7 @@ import AddSection from '../page/Curriculum marketing/AddSection'
 import ListDetails from '../page/Curriculum marketing/ListDetails'
 import CouponList from '../page/Curriculum marketing/CouponList'
 import NewCoupon from '../page/Curriculum marketing/NewCoupon'
+import ChangePhoneNo from '@/page/school/ChangePhoneNo.vue'
 
 Vue.use(Router)
 
@@ -237,6 +238,10 @@ export default new Router({
     {
       path: '/NewCoupon',
       component: NewCoupon
+    },
+    {
+      path: '/ChangePhoneNo',
+      component: ChangePhoneNo
     }
   ]
 })

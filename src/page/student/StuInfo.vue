@@ -279,7 +279,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 }
 /*tab3*/
 #wrap_infor .tab3 ul {
-  background: url(./img/arrrow.png) no-repeat right center;
+  background: url(../../../static/images/arrrow.png) no-repeat right center;
   background-size: 0.37037037rem;
 }
 </style>

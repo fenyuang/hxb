@@ -127,7 +127,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
   width: 2.22222222rem;
   height: 2.22222222rem;
   border-radius: 50%;
-  background: url(./img/pict.png) no-repeat;
+  background: url(../../../static/images/pict.png) no-repeat;
   background-size: 2.22222222rem;
   margin: 0 auto;
 }
@@ -232,7 +232,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 }
 /*tab3*/
 .tab3 ul {
-  background: url(./img/arrrow.png) no-repeat right center;
+  background: url(../../../static/images/arrrow.png) no-repeat right center;
   background-size: 0.37037037rem;
 }
 </style>

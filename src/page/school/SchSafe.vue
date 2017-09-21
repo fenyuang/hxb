@@ -246,7 +246,7 @@ ul li a {
   width: 2.22222222rem;
   height: 2.22222222rem;
   border-radius: 50%;
-  background: url(./img/pict.png) no-repeat;
+  background: url(../../../static/images/pict.png) no-repeat;
   background-size: 2.22222222rem;
   margin: 0 auto;
   margin-top: 0.57407407rem;
@@ -377,7 +377,7 @@ ul li a {
   right: 0;
   height: 0.755556rem;
   line-height: 0.755555rem;
-  background: url(./img/add.png) no-repeat;
+  background: url(../../../static/images/add.png) no-repeat;
   background-size: 0.74074074rem;
 }
 .school_area .add a {
@@ -466,7 +466,7 @@ ul li a {
   justify-content: space-between;
 }
 .tab3 ul {
-  background: url(./img/arrrow.png) no-repeat right center;
+  background: url(../../../static/images/arrrow.png) no-repeat right center;
   background-size: 0.37037037rem;
 }
 .tab3 .right {
@@ -487,7 +487,7 @@ ul li a {
 .name_list ul li {
   width: 1.62962963rem;
   float: left;
-  background: url(./img/trangle.png) no-repeat right center;
+  background: url(../../../static/images/trangle.png) no-repeat right center;
   background-size: 0.37037037rem;
 }
 .box {

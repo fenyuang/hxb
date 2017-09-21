@@ -11,77 +11,81 @@
         </div>
     </div>
    
-    <!-- 	角色权限 -->
+    <!--  角色权限 -->
     <div>
         <div class="j_power">
             <ul class="mid_title">
-                <li><a href="">角色管理</a></li>
-                <li><a href="">团队管理</a></li>
+              <li v-for="(tab,index) in tabsName">
+                  <a  class="tab-link" @click="tabsSwitch(index)" v-bind:class="{act:tab.isActive}">{{tab.name}}</a> 
+              </li>
+
+       <!--          <li><a href="" class="act">角色管理</a></li>
+                <li><a href="">团队管理</a></li> -->
             </ul>
             <div class="line_bot"></div>
         </div>
+
+
         <!--     角色管理 -->
-        <div class="tab2 tab3">
-            <ul>
-                <li class="tab2_top">
-                    <span style="color: #333333">超级管理员</span>
-                    <span class="control">操作者</span>
-                    <span class="right">系统</span>
-                </li>
-                <li class="tab2_bottom">
-                    <span>Administer</span>
-                    <span>2017/03/20 16:00</span>
-                </li>
-            </ul>
-            <ul>
-                <li class="tab2_top">
-                    <span style="color: #333333">校长</span>
-                    <span class="control">操作者</span>
-                    <span class="right">Lucy</span>
-                </li>
-                <li class="tab2_bottom">
-                    <span>President</span>
-                    <span>2017/03/20 16:00</span>
-                </li>
-            </ul>
-            <ul>
-                <li class="tab2_top">
-                    <span style="color: #333333">全职老师</span>
-                    <span class="control">操作者</span>
-                    <span class="right">Lucy</span>
-                </li>
-                <li class="tab2_bottom">
-                    <span>Full-time teacher</span>
-                    <span>2017/03/20 16:00</span>
-                </li>
-            </ul>
-              <div class="add"><a href="#/AddRole"></a></div>
-        </div>
-        <!--    团队管理 -->
-        <div style="display:block">
-            <div class="name_list">
-                <ul>
-                    <li><a href="">姓名</a></li>
-                    <li><a href="">角色</a></li>
-                </ul>
-                <div class="line_bot"></div>
-            </div>
-            <div class="tab2 tab3 tab4">
-                <ul>
-                    <li class="tab2_top"><span style="color: #333333">付露</span><span>已经预定</span></li>
-                    <li class="tab2_bottom"><span>12345678910</span><span>2017/03/20 16:00</span></li>
-                </ul>
-                <ul>
-                    <li class="tab2_top"><span style="color: #333333">付露</span><span>已经预定</span></li>
-                    <li class="tab2_bottom"><span>12345678910</span><span>2017/03/20 16:00</span></li>
-                </ul>
-                <ul>
-                    <li class="tab2_top"><span style="color: #333333">付露</span><span>已经预定</span></li>
-                    <li class="tab2_bottom"><span>12345678910</span><span>2017/03/20 16:00</span></li>
-                </ul>
-            </div>
-            <div class="box"></div>
-        </div>
+    <div class="cards"> 
+      <div class="tab_card" style="display:block" v-show='roleM === 0'>
+            <div class="tab2 tab3">
+              <ul>
+                  <li class="tab2_top">
+                      <span style="color: #333333">超级管理员</span>
+                      <span class="control">操作者</span>
+                      <span class="right">系统</span>
+                  </li>
+                  <li class="tab2_bottom">
+                      <span>Administer</span>
+                      <span>2017/03/20 16:00</span>
+                  </li>
+              </ul>
+              <ul>
+                  <li class="tab2_top">
+                      <span style="color: #333333">校长</span>
+                      <span class="control">操作者</span>
+                      <span class="right">Lucy</span>
+                  </li>
+                  <li class="tab2_bottom">
+                      <span>President</span>
+                      <span>2017/03/20 16:00</span>
+                  </li>
+              </ul>
+              <ul>
+                  <li class="tab2_top">
+                      <span style="color: #333333">全职老师</span>
+                      <span class="control">操作者</span>
+                      <span class="right">Lucy</span>
+                  </li>
+                  <li class="tab2_bottom">
+                      <span>Full-time teacher</span>
+                      <span>2017/03/20 16:00</span>
+                  </li>
+              </ul>
+                <div class="add"><a href="#/AddRole"></a></div>
+          </div>
+      </div>  
+
+          <!--    团队管理 -->
+      <div class="tab_card" style="display:block" v-show='roleM === 1'>
+               <div class="tab2 tab3 tab4" >
+              <ul>
+                  <li class="tab2_top"><span style="color: #333333">付露</span><span>已经预定</span></li>
+                  <li class="tab2_bottom"><span>12345678910</span><span>2017/03/20 16:00</span></li>
+              </ul>
+              <ul>
+                  <li class="tab2_top"><span style="color: #333333">付露</span><span>已经预定</span></li>
+                  <li class="tab2_bottom"><span>12345678910</span><span>2017/03/20 16:00</span></li>
+              </ul>
+              <ul>
+                  <li class="tab2_top"><span style="color: #333333">付露</span><span>已经预定</span></li>
+                  <li class="tab2_bottom"><span>12345678910</span><span>2017/03/20 16:00</span></li>
+              </ul>
+          </div>  
+      </div>
+      <div class="box"></div>
+      </div>
       <div class="add"><a href="#/AddRole"></a></div>
     </div>
 </div>
@@ -92,13 +96,33 @@ export default {
   name: '',
   data () {
     return {
-      msg: ''
+      tabsName: [{
+        name: '角色管理',
+        isActive: true
+      },
+      {
+        name: '团队管理',
+        isActive: false
+      }
+      ],
+      act: false,
+      roleM: 0
+
+    }
+  },
+  methods: {
+    tabsSwitch: function (tabIndex) {
+      console.log(tabIndex)
+      this.roleM = tabIndex
     }
   }
 }
 </script>
 
 <style scoped>
+
+
+
 @charset "utf-8";
 body,div,p,ul,li,a,dl,dt,dd,img,ol,input,table,tr,td,textarea,h1,h2,h3,h4,h5,h6,select {
   margin: 0;
@@ -214,7 +238,7 @@ ul li a {
   width: 2.22222222rem;
   height: 2.22222222rem;
   border-radius: 50%;
-  background: url(./img/pict.png) no-repeat;
+  background: url(../../../static/images/pict.png) no-repeat;
   background-size: 2.22222222rem;
   margin: 0 auto;
   margin-top: 0.57407407rem;
@@ -345,7 +369,7 @@ ul li a {
   right: 0;
   height: 0.755556rem;
   line-height: 0.755555rem;
-  background: url(./img/add.png) no-repeat;
+  background: url(../../../static/images/add.png) no-repeat;
   background-size: 0.74074074rem;
 }
 .school_area .add a {
@@ -434,7 +458,7 @@ ul li a {
   justify-content: space-between;
 }
 .tab3 ul {
-  background: url(./img/arrrow.png) no-repeat right center;
+  background: url(../../../static/images/arrow2.jpg) no-repeat right center;
   background-size: 0.37037037rem;
 }
 .tab3 .right {
@@ -455,7 +479,7 @@ ul li a {
 .name_list ul li {
   width: 1.62962963rem;
   float: left;
-  background: url(./img/trangle.png) no-repeat right center;
+  background: url(../../../static/images/trangle.png) no-repeat right center;
   background-size: 0.37037037rem;
 }
 .box {
@@ -518,7 +542,7 @@ ul li a {
   height: 1.48rem;
   width: 1.48rem;
   line-height: 1.48rem;
-  background: url(./img/add.png) no-repeat;
+  background: url(../../../static/images/add.png) no-repeat;
   background-size: 1.48rem;
   position: absolute;
   bottom: 2.22rem;
@@ -532,4 +556,5 @@ ul li a {
   color: #93c971;
   font-size: 0.55555556rem;
 }
+.font_wryh .cards .tab_card{display: none;}
 </style>
