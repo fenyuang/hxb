@@ -5,46 +5,105 @@
     	<table>
     		<tr>
     			<td class="td_left">姓名</td>
-    			<td><input type="text" name="" value ="(请输名称,输入后不可修改)"></td>
+    			<td><input type="text" name="" id="quan_name"  placeholder="(请输名称,输入后不可修改)" value=""></td>
     		</tr>
             <tr>
                 <td class="td_left">手机号码</td>
-                <td><input type="text" name="" value ="(请输名称,输入后不可修改)"></td>
+                <td><input type="text" name="" id="quan_tel"  placeholder="(请输名称,输入后不可修改)" value=""></td>
             </tr>
             <tr>
                 <td class="td_left">QQ号码</td>
-                <td><input type="text" name="" value ="(请输名称,输入后不可修改)"></td>
+                <td><input type="text" name="" id="quan_qq"  placeholder="(请输名称,输入后不可修改)" value=""></td>
             </tr>
             <tr>
                 <td class="td_left">设置密码</td>
-                <td><input type="password" name="" value ="(请输名称,输入后不可修改)"></td>
+                <td><input type="password" name=""  id="quan_password"  placeholder="(请输名称,输入后不可修改)" value=""></td>
             </tr>
     		<tr>
     			<td class="td_left" style="color: #2c618b;">角色确认</td>
     			<td>
-    			    <select>
-	    				<option value="广东省 深圳市 南山区">广东省 深圳市 南山区</option>
-	    				<option value="广东省 深圳市 南山区">广东省 深圳市 南山区</option>
-	    				<option value="广东省 深圳市 南山区">广东省 深圳市 南山区</option>
-	    				<option value="广东省 深圳市 南山区">广东省 深圳市 南山区</option>
-	    				<option value="广东省 深圳市 南山区">广东省 深圳市 南山区</option>
+    			    <select id="quan_role_id">
+	    				<option :value="list.id" v-for="list in rolelsit">{{list.name}}</option>
     			    </select>
     			</td>
     		</tr>
     	</table>
     	
     </div>
-    <div class="send"><a href="">提交</a></div>
+    <div class="send"><a @click="subadd">提交</a></div>
 </div>
 </template>
-
 <script>
+import axios from 'axios'
+import $ from 'jquery'
 export default {
   name: '',
-  data () {
+  data: function () {
     return {
-      msg: ''
+      tabsName: ['角色管理', '团队管理'],
+      curIndex: 0,
+      rolelsit: []
     }
+  },
+  methods: {
+    tabsSwitch: function (x) {
+      this.curIndex = x
+    },
+    subadd () {
+      var name = $('#quan_name').val()
+      var tel = $('#quan_tel').val()
+      var qq = $('#quan_qq').val()
+      var password = $('#quan_password').val()
+      var roleid = $('#quan_role_id').val()
+
+      if (name === '') {
+        alert('填写名字')
+        return false
+      }
+      if (tel === '') {
+        alert('填写手机号码')
+        return false
+      }
+      if (qq === '') {
+        alert('填写QQ')
+        return false
+      }
+      if (password === '') {
+        alert('填写 密码')
+        return false
+      }
+      this.datas = {name: name, tel: tel, qq: qq, password: password, role_id: roleid}
+      this.getAddrole(this.datas)
+    },
+    getRolelist () {
+      axios.post('http://hxb.scpoo.com/hxb/index.php/index/Power/getRolelist').then((res) => {
+        if (res.status === 200) {
+          if (res.data.ret === 100) {
+            this.rolelsit = res.data.data
+          } else {
+            console.log(res.data.msg)
+          }
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+    getAddrole (datas) {
+      axios.post('http://hxb.scpoo.com/hxb/index.php/index/Power/getTeamadd', datas).then((res) => {
+        if (res.status === 200) {
+          if (res.data.ret === 100) {
+            alert(res.data.msg)
+          } else {
+            console.log(res.data.msg)
+          }
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+  },
+  mounted () {
+    this.getRolelist()
   }
 }
 </script>

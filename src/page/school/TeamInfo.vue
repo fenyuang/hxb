@@ -3,25 +3,25 @@
 	  	<div class="order_spe">
 	  		<table>
 	  			<tr>
-	  				<td class="td_left">序号</td><td class="td_right">01</td>
+	  				<td class="td_left">序号</td><td class="td_right">{{info.id}}</td>
 	  			</tr>
 	  			<tr>
-	  				<td class="td_left">姓名</td><td class="td_right">01</td>
+	  				<td class="td_left">姓名</td><td class="td_right">{{info.name}}</td>
 	  			</tr>
 	  			<tr>
-	  				<td class="td_left">角色</td><td class="td_right">01</td>
+	  				<td class="td_left">角色</td><td class="td_right">{{info.role_name}}</td>
 	  			</tr>
 	  			<tr>
-	  				<td class="td_left">手机号码</td><td class="td_right">01</td>
+	  				<td class="td_left">手机号码</td><td class="td_right">{{info.tel}}</td>
 	  			</tr>
 	  			<tr>
-	  				<td class="td_left">QQ号</td><td class="td_right">超级管理员</td>
+	  				<td class="td_left">QQ号</td><td class="td_right">{{info.qq}}</td>
 	  			</tr>
 	  			<tr>
-	  				<td class="td_left">创建人</td><td class="td_right">Administer</td>
+	  				<td class="td_left">创建人</td><td class="td_right">{{info.role_author}}</td>
 	  			</tr>
 	  			<tr>
-	  				<td class="td_left">创建时间</td><td class="td_right">2017/07/02 11:21</td>
+	  				<td class="td_left">创建时间</td><td class="td_right">{{info.create_time}}</td>
 	  			</tr> 			
 	  		</table>
 	  	</div>
@@ -32,23 +32,40 @@
 	  			</tr>
 	  		</table>
 	  	</div>
-	  		
 </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
-  name: '',
   data () {
     return {
-      msg: ''
+      addClass: 0,
+      info: []
     }
+  },
+  methods: {
+    getInfo () {
+      axios.post('http://hxb.scpoo.com/hxb/index.php/index/Power/getTeaminfo', {id: this.$route.query.id}).then((res) => {
+        if (res.status === 200) {
+          if (res.data.ret === 100) {
+            this.info = res.data.data
+          } else {
+            console.log(res.data.msg)
+          }
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+  },
+  mounted () {
+    this.getInfo()
   }
 }
 </script>
 
 <style scoped>
-
 body,div,p,ul,li,a,dl,dt,dd,img,ol,input,table,tr,td,textarea,h1,h2,h3,h4,h5,h6,select {
   margin: 0;
   padding: 0;

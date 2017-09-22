@@ -30,68 +30,31 @@
     <div class="cards"> 
       <div class="tab_card" v-show='curIndex === 0'>
             <div class="tab2 tab3">
-            <a href="#/RoleInfo">
+            <a  v-bind:href="'#/RoleInfo?id=' + list.id " v-for="list in rolelsit">
               <ul>
                   <li class="tab2_top">
-                      <span style="color: #333333">超级管理员</span>
+                      <span style="color: #333333">{{list.name}}</span>
                       <span class="control">操作者</span>
-                      <span class="right">系统</span>
+                      <span class="right">{{list.author}}</span>
                   </li>
                   <li class="tab2_bottom">
-                      <span>Administer</span>
-                      <span>2017/03/20 16:00</span>
+                      <span>{{list.description}}</span>
+                      <span>{{list.addtime}}</span>
                   </li>
               </ul>
             </a>
-            <a href="#/RoleInfo">
-                 <ul>
-                  <li class="tab2_top">
-                      <span style="color: #333333">校长</span>
-                      <span class="control">操作者</span>
-                      <span class="right">Lucy</span>
-                  </li>
-                  <li class="tab2_bottom">
-                      <span>President</span>
-                      <span>2017/03/20 16:00</span>
-                  </li>
-              </ul>   
-            </a>
-            <a href="#/RoleInfo">
-              <ul>
-                  <li class="tab2_top">
-                      <span style="color: #333333">全职老师</span>
-                      <span class="control">操作者</span>
-                      <span class="right">Lucy</span>
-                  </li>
-                  <li class="tab2_bottom">
-                      <span>Full-time teacher</span>
-                      <span>2017/03/20 16:00</span>
-                  </li>
-              </ul>
-            </a>
-                <div class="add"><a href="#/AddRole"></a></div>
+            <!-- 添加角色 -->
+            <div class="add"><a href="#/AddRole"></a></div>
           </div>
       </div>  
           <!--    团队管理 -->
       <div class="tab_card"  v-show='curIndex === 1'>
             <div class="tab2 tab3 tab4" >
-            <a href="#/TeamInfo">
+            <a v-bind:href="'#/TeamInfo?id=' + list.id " v-for="list in teamlist">
                 <ul>
-                    <li class="tab2_top"><span style="color: #333333">付露</span><span>已经预定</span></li>
-                    <li class="tab2_bottom"><span>12345678910</span><span>2017/03/20 16:00</span></li>
+                    <li class="tab2_top"><span style="color: #333333">{{list.user_name}}</span><span>{{list.tel}}</span></li>
+                    <li class="tab2_bottom"><span>{{list.description}}</span><span>{{list.create_time}}</span></li>
                 </ul>
-            </a>
-            <a href="#/TeamInfo">
-              <ul>
-                  <li class="tab2_top"><span style="color: #333333">付露</span><span>已经预定</span></li>
-                  <li class="tab2_bottom"><span>12345678910</span><span>2017/03/20 16:00</span></li>
-              </ul>
-            </a>
-            <a href="#/TeamInfo">
-              <ul>
-                  <li class="tab2_top"><span style="color: #333333">付露</span><span>已经预定</span></li>
-                  <li class="tab2_bottom"><span>12345678910</span><span>2017/03/20 16:00</span></li>
-              </ul>
             </a>
           </div> 
           <div class="box"></div> 
@@ -105,19 +68,51 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: '',
   data: function () {
     return {
       tabsName: ['角色管理', '团队管理'],
-      curIndex: 0
+      curIndex: 0,
+      rolelsit: [],
+      teamlist: []
     }
   },
   methods: {
     tabsSwitch: function (x) {
-      console.log(x)
       this.curIndex = x
+    },
+    getRolelist () {
+      axios.post('http://hxb.scpoo.com/hxb/index.php/index/Power/getRolelist').then((res) => {
+        if (res.status === 200) {
+          if (res.data.ret === 100) {
+            this.rolelsit = res.data.data
+          } else {
+            console.log(res.data.msg)
+          }
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+    getTeamlist () {
+      axios.post('http://hxb.scpoo.com/hxb/index.php/index/Power/getTeamlist').then((res) => {
+        if (res.status === 200) {
+          if (res.data.ret === 100) {
+            this.teamlist = res.data.data
+          } else {
+            console.log(res.data.msg)
+          }
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
     }
+  },
+  mounted () {
+    this.getRolelist()
+    this.getTeamlist()
   }
 }
 </script>

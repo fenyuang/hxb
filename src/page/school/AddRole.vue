@@ -1,42 +1,90 @@
 <template>
   <div class="add_school" id="ad_r">
-	<div class="add_head"><a href="">新增角色</a></div>
+	<div class="add_head"><a href="#/AddRole">新增角色</a></div>
     <div class="add_content">
     	<table>
     		<tr>
     			<td class="td_left">角色名称</td>
-    			<td><input type="text" name="" value ="(请输名称,输入后不可修改)"></td>
+    			<td><input type="text" name="name" id="quan_name" placeholder="(请输名称,输入后不可修改)" value=""></td>
     		</tr>
             <tr>
-                <td class="td_left">角色名称</td>
-                <td><input type="text" name="" value ="(请输名称,输入后不可修改)"></td>
+                <td class="td_left">备注名称</td>
+                <td><input type="text" name="beizhu" id="quan_beizhu"  placeholder="(请输名称,输入后不可修改)" value=""></td>
             </tr>
     		<tr>
     			<td class="td_left" style="color: #2c618b;">角色权限</td>
     			<td>
     			    <select>
-	    				<option value="广东省 深圳市 南山区">a</option>
-	    				<option value="广东省 深圳市 南山区">b</option>
-	    				<option value="广东省 深圳市 南山区">c</option>
-	    				<option value="广东省 深圳市 南山区">d</option>
-	    				<option value="广东省 深圳市 南山区">e</option>
+	    				 <option :value="list.id" v-for="list in rolelsit">{{list.description}}</option>
     			    </select>
     			</td>
     		</tr>
     	</table>
     	
     </div>
-    <div class="send"><a href="">提交</a></div>
+    <div class="send"><a @click="subadd">提交</a></div>
 </div>	
 </template>
 
 <script>
+import axios from 'axios'
+import $ from 'jquery'
 export default {
   name: '',
-  data () {
+  data: function () {
     return {
-      msg: ''
+      tabsName: ['角色管理', '团队管理'],
+      curIndex: 0,
+      rolelsit: []
     }
+  },
+  methods: {
+    tabsSwitch: function (x) {
+      this.curIndex = x
+    },
+    subadd () {
+      var name = $('#quan_name').val()
+      var beizhu = $('#quan_beizhu').val()
+      if (name === '') {
+        alert('填写名字')
+        return false
+      }
+      if (beizhu === '') {
+        alert('填写备注')
+        return false
+      }
+      this.datas = {name: name, description: beizhu, role_id: ['1', '2']}
+      this.getAddrole(this.datas)
+    },
+    getRolelist () {
+      axios.post('http://hxb.scpoo.com/hxb/index.php/index/Power/getInterfacelsit').then((res) => {
+        if (res.status === 200) {
+          if (res.data.ret === 100) {
+            this.rolelsit = res.data.data
+          } else {
+            console.log(res.data.msg)
+          }
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+    getAddrole (datas) {
+      axios.post('http://hxb.scpoo.com/hxb/index.php/index/Power/getRoleadd', datas).then((res) => {
+        if (res.status === 200) {
+          if (res.data.ret === 100) {
+            alert(res.data.msg)
+          } else {
+            console.log(res.data.msg)
+          }
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+  },
+  mounted () {
+    this.getRolelist()
   }
 }
 </script>

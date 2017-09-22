@@ -3,19 +3,19 @@
 	  	<div class="order_spe">
 	  		<table>
 	  			<tr>
-	  				<td class="td_left">序号</td><td class="td_right">01</td>
+	  				<td class="td_left">序号</td><td class="td_right">{{info.id}}</td>
 	  			</tr>
 	  			<tr>
-	  				<td class="td_left">角色名称</td><td class="td_right">超级管理员</td>
+	  				<td class="td_left">角色名称</td><td class="td_right">{{info.name}}</td>
 	  			</tr>
 	  			<tr>
-	  				<td class="td_left">备注名称</td><td class="td_right">Administer</td>
+	  				<td class="td_left">备注名称</td><td class="td_right">{{info.description}}</td>
 	  			</tr>
 	  			<tr>
-	  				<td class="td_left">最近操作时间</td><td class="td_right">2017/07/02 11:21</td>
+	  				<td class="td_left">最近操作时间</td><td class="td_right">{{info.addtime}}</td>
 	  			</tr>
 	  			<tr>
-	  				<td class="td_left">操作者</td><td class="td_right">系统</td>
+	  				<td class="td_left">操作者</td><td class="td_right">{{info.author}}</td>
 	  			</tr> 			
 	  		</table>
 	  	</div>
@@ -30,12 +30,31 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
-  name: '',
   data () {
     return {
-      msg: ''
+      addClass: 0,
+      info: []
     }
+  },
+  methods: {
+    getInfo () {
+      axios.post('http://hxb.scpoo.com/hxb/index.php/index/Power/getRoleinfo', {id: this.$route.query.id}).then((res) => {
+        if (res.status === 200) {
+          if (res.data.ret === 100) {
+            this.info = res.data.data
+          } else {
+            console.log(res.data.msg)
+          }
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+  },
+  mounted () {
+    this.getInfo()
   }
 }
 </script>
