@@ -93,7 +93,6 @@
       axios.post('http://hxb.scpoo.com/hxb/index.php/index/clue/clue_grade_list').then((res) => {
         if (res.status === 200) {
           if (res.data.ret === 100) {
-            console.log(res.data.data)
             this.clueGrade = res.data.data
           } else {
             alert(res.data.msg)

@@ -119,7 +119,6 @@ export default {
       }
     },
     getCity: function () {}
-
   }
 }
 </script>
@@ -215,7 +214,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 #ap_sch .add_content select{height: 1.667rem;font-size: 0.444rem;color: #999999;border: none;text-align: center;width: 100%;padding-left: 0.5rem;}
 
 #ap_sch .add_content .special{color: #2c618b;
-	width: 2.222rem;
+	width: 2.322rem;
 	height: 0.889rem;
 /*	border: 1px solid #2c618b;*/
 	border-radius: 0.093rem;

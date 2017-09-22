@@ -4,11 +4,11 @@
       <table cellspacing="0" cellpadding="2" border="1" >
          <tr v-for="list in ClueMan">
            <td class="Clue_hierarchy_name">
-             高对比，意向强，近期可能报名
+            {{list.name}}
            </td>
            <td class="Clue_hierarchy_num">
              <span class="clue">回访</span>
-             <span class="num">{{list.clue_count}}</span>
+             <span class="num">{{list.visit_count}}</span>
            </td>
            <td class="Clue_hierarchy_btn">
              <input type="button"  value="移除回访" @tap="remove(list.id)"/>
@@ -18,7 +18,7 @@
       </table>
 
     <!--添加按钮-->
-    <div class="add_btn" @click="addClueGra">
+    <div class="add_btn" @click="addState">
       <img src="../../../static/images/add.png"/>
     </div>
 
@@ -36,8 +36,7 @@
       }
     },
     mounted () {
-      axios.post('http://hxb.scpoo.com/hxb/index.php/index/clue/clue_grade_list').then((res) => {
-        console.log(res)
+      axios.post('http://hxb.scpoo.com/hxb/index.php/index/clue/visit_status_list').then((res) => {
         if (res.data.ret === 100) {
           this.ClueMan = res.data.data
         } else {
@@ -46,14 +45,14 @@
       })
     },
     methods: {
-      addClueGra () {
-        this.$router.push('/AddClueGrade')
+      addState () {
+        this.$router.push('/AddState')
       },
       remove (id) {
         this.$router.push({path: '/RemoveVisit', query: {id: id}})
       },
       delClueGra (id) {
-        axios.post('http://hxb.scpoo.com/hxb/index.php/index/clue/visit_remove', {id: id}).then((res) => {
+        axios.post('http://hxb.scpoo.com/hxb/index.php/index/clue/visit_status_delete', {id: id}).then((res) => {
           if (res.data.ret === 100) {
             confirm(res.data.msg)
             location.reload([true])

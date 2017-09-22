@@ -29,7 +29,7 @@
 	                    <td class="center">
 	                        <input type="text" name="tel" :value="info['tel']">
 	                    </td>
-	                    <td class="right"><a href="javascript:;" @click="save_tel($event.target)">更改绑定</a></td>
+	                    <td class="right"><a href="#/ChangePhoneNo" @click="save_tel($event.target)">更改绑定</a></td>
 	                </tr>
 	            </table>	
             </div>
@@ -50,7 +50,7 @@
 	                    <td class="center">
 	                        <input type="password" name="password" value="******">
 	                    </td>
-	                    <td class="right"><a href="javascript:;" @click="save_password($event.target)">修改密码</a></td>
+	                    <td class="right"><a href="#/ModifyPassword" @click="save_password($event.target)">修改密码</a></td>
 	                </tr>
 	            </table>	
             </div>  

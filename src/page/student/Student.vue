@@ -207,12 +207,12 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
   margin: 0 auto;
   color: #333333;
   font-size: 0.44444444rem;
+  margin-left: 0.72222222rem;
+  margin-bottom: 1.21875rem;
 }
-#wrap .content_list span {
-  color: #999999;
-}
+
 #wrap .content_list li.left{width:3.519rem}
-#wrap .content_list li.right{}
+
 #wrap .content_list .name,.content_list .sex {
   font-size: 0.519rem;
   color: #333;
@@ -240,9 +240,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
   font-size: 0.419rem;
   height: 0.8rem;
 }
-#wrap .content_list p {
-  margin-left: 0.72222222rem;
-}
+
 #wrap .line {
   height: 0.37037037rem;
   background-color: #eeeeee;

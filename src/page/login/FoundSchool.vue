@@ -22,6 +22,7 @@
 
 <script>
 import axios from 'axios'
+import $ from 'jquery'
 export default {
   data () {
     return {
@@ -47,7 +48,7 @@ export default {
         })
     },
     Index () {
-      document.querySelector('.index').click()
+      $('.index').click()
     },
     errorRegisterFoundSchool () {
       this.errorRegister = false
@@ -58,6 +59,7 @@ export default {
 
 <style scoped>
 	ul,ol,li { list-style: none;}
+	input { border: 0;}
 	.text { text-align: center; height: 4rem; line-height: 4rem; font-size: 0.6rem; color: #333333;}
 	.mui-input-row { width: 9rem; height: 1.5rem; line-height: 1.5rem; margin: 0 auto;}
 	.mui-input-row input { height: 1.5rem !important; line-height: 1.5rem !important; font-size: 0.4rem; padding: 0 0.4rem; margin-bottom: 0;}

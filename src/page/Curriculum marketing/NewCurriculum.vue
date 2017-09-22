@@ -8,7 +8,7 @@
     <form name="newCurr">
       <div class="add_clue_form">
         <div class="form_name">
-         <input name="name" type="text" placeholder="课程名称" />
+         <input name="name" type="text" placeholder="课程名称" :value="info.name"/>
         </div>
         <div class="form_name">
           <select name="parent_category" :value = "parent_category" @change="chose_category">
@@ -54,13 +54,13 @@
         <div style="width: 78px;height: 60px;position: relative;display: inline-block;margin-right: 10px;" v-for="(list, index) in MainImg">
           <img :src = 'list.url' style="width: 78px;height: 60px;" />
           <span style=" position: absolute;left: 0;bottom:0; width: 78px;height: 26px;background-color: rgba(0,0,0,0.5);">
-              <img src="../../../static/images/deletege.png" style=" width: 18px;height: 24px;float: right" @tap.stop='removePic($event.target, index)'/>
+              <img src="../../../static/images/deletege.png" style=" width: 18px;height: 24px;float: right" @click.self='removePic($event.target, index)'/>
            </span>
         </div>
 
         <div class="mainPic">
           <img  src="../../../static/images/addPic.png"/>
-          <input type="file" @change.stop="fil" name="pic" style="position: absolute;top:15px;left: 1px;opacity: 0;z-index: 5;width: 1.8rem;"/>
+          <input type="file" @change.stop="fil" name="pic" style="position: absolute;top:15px;left: 1px;opacity: 0;z-index: 5;width: 1.8rem;" multiple="multiple"/>
         </div>
       </div>
 
@@ -70,13 +70,13 @@
         <div style="width: 78px;height: 60px;position: relative;display: inline-block;margin-right: 10px;" v-for="(list, index) in TextImg">
           <img :src = 'list.url' style="width: 78px;height: 60px;" />
           <span style=" position: absolute;left: 0;bottom:0; width: 78px;height: 26px;background-color: rgba(0,0,0,0.5);">
-              <img src="../../../static/images/deletege.png" style=" width: 18px;height: 24px;float: right" @tap.stop='removePic($event.target, index)'/>
+              <img src="../../../static/images/deletege.png" style=" width: 18px;height: 24px;float: right" @click.self='removePic($event.target, index)'/>
            </span>
         </div>
 
         <div class="mainPic TextImg">
           <img  src="../../../static/images/addPic.png"/>
-          <input type="file" @change.stop="fil" name="pic[]" style="position: absolute;top:15px;left: 1px;opacity: 0;z-index: 5;width: 1.8rem;"/>
+          <input type="file" @change.stop="fil" name="pic" style="position: absolute;top:15px;left: 1px;opacity: 0;z-index: 5;width: 1.8rem;"   multiple="multiple" />
         </div>
       </div>
 
@@ -112,27 +112,30 @@
     methods: {
       fil (ev) {
         if (ev.target.files.length !== 0) {
-          let file = ev.target.files[0]
-          let type = file.type.split('/')[0]
-          if (type !== 'image') {
-            alert('请上传图片')
-            return
-          }
-          var size = Math.round(file.size / 1024 / 1024)
-          if (size > 3) {
-            alert('图片大小不得超过3M')
-            return
-          }
-          let reader = new FileReader()
-          reader.readAsDataURL(file)
-          let self = this
-          reader.onloadend = function (e) {
-            let dataUrl = reader.result
-            let obj = {url: dataUrl}
-            if ($(ev.target).parents('.mainPic').attr('class').indexOf('TextImg') === -1) {
-              self.MainImg.push(obj)
-            } else {
-              self.TextImg.push(obj)
+          let file = ev.target.files
+          console.log(ev.target.files)
+          for (let i = 0; i < file.length; i++) {
+            let type = file[i].type.split('/')[0]
+            if (type !== 'image') {
+              alert('请上传图片')
+              break
+            }
+            var size = Math.round(file[i].size / 1024 / 1024)
+            if (size > 3) {
+              alert('图片大小不得超过3M')
+              break
+            }
+            let reader = new FileReader()
+            reader.readAsDataURL(file[i])
+            let self = this
+            reader.onloadend = function (e) {
+              let dataUrl = reader.result
+              let obj = {url: dataUrl}
+              if ($(ev.target).parents('.mainPic').attr('class').indexOf('TextImg') === -1) {
+                self.MainImg.push(obj)
+              } else {
+                self.TextImg.push(obj)
+              }
             }
           }
         } else {
@@ -259,6 +262,7 @@
         text-align: center;
         vertical-align: middle;
         border-color: #2c618b;
+        color:#2c618b;
         background-color: #eeeeee;
       }
     }

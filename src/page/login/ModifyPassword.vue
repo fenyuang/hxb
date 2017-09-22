@@ -159,6 +159,7 @@ export default {
 
 <style scoped>
 	button { padding: 0;}
+	input { border: 0;}
 	.mui-input-row { width: 9rem; height: 1.5rem; line-height: 1.5rem; margin: 0 auto;}
 	.mui-input-row input { height: 1.5rem; line-height: 1.5rem; font-size: 0.4rem;}
 	.mui-input-row .mui-input-clear~.mui-icon-clear, .mui-input-row .mui-input-password~.mui-icon-eye, .mui-input-row .mui-input-speech~.mui-icon-speech { width: 0.4rem; height: 0.4rem; top: 0.55rem; right: 0.55rem;}

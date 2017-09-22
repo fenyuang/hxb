@@ -16,9 +16,12 @@
 	       </div>
        </div>
        <div class="commit"><a href="">确定</a></div>
+       <div class="dialog" style="display:none;">
+         <span class="font_black">更换手机绑定成功，正在回到安全设置...</span>
+         <span class="font_blue">返回安全设置&gt;&gt; </span>
+       </div>
   </div>
 </template>
-
 <script>
 export default {
   name: '',
@@ -31,6 +34,7 @@ export default {
 </script>
 
 <style scoped>
+
 #change_no .header{height: 3.406rem;width: 100%;margin: 0 auto;}
 #change_no .header h1 a{
 	display: block;
@@ -58,6 +62,12 @@ export default {
 #change_no .commit{height: 1.594rem;background-color: #2c618b;margin: 0 0.625rem;text-align: center;line-height: 1.594rem; }
 
 #change_no .commit a{color: #fff;font-size: 0.5rem;}
+
+#change_no .dialog span{display: block;text-align: center;}
+#change_no .dialog .font_black{font-size: 0.5rem;color: #333333;}
+#change_no .dialog .font_blue{font-size: 0.5rem;color: #2c618b;}
+#change_no .dialog{margin:0 0.625rem;position: absolute;top: 3.719rem;}
+#change_no{position: relative;}
 
 
 body,div,p,ul,li,a,dl,dt,dd,img,ol,input,table,tr,td,textarea,h1,h2,h3,h4,h5,h6,select {

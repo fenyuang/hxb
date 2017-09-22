@@ -1,8 +1,9 @@
 <template>
   <HeaderNav :classify  = 0  :searchIcon = 0 >
-  <div class="ViewOutline">
+    <h4 v-if="viewlist.length === 0" style="text-align: center;margin-top: 50px;">该课程暂时没有大纲哦 </h4>
+    <div class="ViewOutline" v-else>
     <h4>查看课程大纲</h4>
-    <ul class="ViewOutline_list" v-if="viewlist">
+    <ul class="ViewOutline_list">
 
       <li class="margin"  v-for="(list, index) in viewlist">
         <div class="unitImg">
@@ -21,7 +22,6 @@
       </li>
 
     </ul>
-    <center v-else="">Not Word </center>
   </div>
   </HeaderNav>
 </template>
@@ -60,8 +60,6 @@
           if (res.status === 200) {
             if (res.data.ret === 100) {
               this.viewlist = res.data.data
-            } else {
-              alert(res.data.msg)
             }
           }
         }).catch((err) => {

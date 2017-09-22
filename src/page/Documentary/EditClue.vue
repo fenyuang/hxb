@@ -8,11 +8,11 @@
     <form >
     <div class="add_clue_form">
         <div class="form_name">
-          <label for="name">回访人</label><input id="name" type="text" name="name"/>
+          <label for="name">回访人</label><input id="name" type="text" name="name" :value="ClueInfo.name"/>
         </div>
         <div class="form_name">
           <label for="sex">性别</label>
-          <select name="sex" id="sex">
+          <select name="sex" id="sex" :value="ClueInfo.sex">
             <option value="1">男</option>
             <option value="2">女</option>
           </select>
@@ -20,11 +20,11 @@
         </div>
         <div class="form_name">
           <label for="phone">电话</label>
-          <input id="phone" type="text" name="phone"/>
+          <input id="phone" type="text" name="phone" :value="ClueInfo.phone"/>
         </div>
         <div class="form_name">
           <label for="occupation">职业</label>
-          <select id="occupation" name="occupation">
+          <select id="occupation" name="occupation" :value="ClueInfo.occupation">
              <option value="1">学生</option>
             <option value="2">上班</option>
             <option value="3">待业</option>
@@ -34,13 +34,13 @@
         </div>
         <div class="form_name">
           <label for="clueRank">线索等级</label>
-          <select id="clueRank" name="grade" >
+          <select id="clueRank" name="grade" :value="ClueInfo.grade" >
             <option :value="list.id" v-for="list in clueGrad">{{list.name}}</option>
           </select>
           <span class="triangle"></span>
         </div>
         <div class="form_name">
-          <label for="clueDetails">线索详情</label><input id="clueDetails" name="info" type="text" />
+          <label for="clueDetails">线索详情</label><input id="clueDetails" name="info" type="text" :value="ClueInfo.info"/>
         </div>
         <div class="form_name" style="display: none">
           <input   name="type" type="text" value="3"/>
@@ -61,7 +61,8 @@
   export default {
     data () {
       return {
-        clueGrad: []
+        clueGrad: [],
+        ClueInfo: {}
       }
     },
     methods: {
@@ -95,6 +96,19 @@
         if (res.status === 200) {
           if (res.data.ret === 100) {
             this.clueGrad = res.data.data
+          }
+          return false
+        } else {
+          confirm(res.data.msg)
+        }
+      }).catch((err) => {
+        confirm(err)
+        return false
+      })
+      axios.post('http://hxb.scpoo.com/hxb/index.php/index/clue/clue_info', {id: this.$route.query.id}).then((res) => {
+        if (res.status === 200) {
+          if (res.data.ret === 100) {
+            this.ClueInfo = res.data.data
           }
           return false
         } else {

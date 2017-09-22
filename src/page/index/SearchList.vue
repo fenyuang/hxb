@@ -41,8 +41,8 @@
 		      </a>
 		      <div class="masker" v-show=" dataType[index] "></div>
 		      <div class="mask" v-show=" dataType[index] ">
-		      	<p><router-link class="preview mask_common" :to="{ name: 'Preview', params: { id: imghtml.id }}">预览</router-link>
-		      	<router-link class="use mask_common" :to="{ name: 'Editor', params: { id: imghtml.id }}">使用</router-link></p>
+		      	<p><a class="preview mask_common" @tap="preview(index)">预览</a>
+		      	<a class="use mask_common" @tap="editor(index)">使用</a></p>
 		      </div>
 		    </li>
 	    </ul>    
@@ -61,6 +61,7 @@ export default {
       SearchData: 0,
       SerchKeyword: [],
       imgHtml: [],
+      imgHtmlId: [],
       dataType: []
     }
   },
@@ -73,20 +74,28 @@ export default {
   },
   methods: {
     getSearchList () {
-      axios.get('http://hxb.scpoo.com/hxb/index.php/api/index/getHotSearch', {
-        keywords: this.$router.currentRoute.params.id
-      })
+      axios.get('http://hxb.scpoo.com/hxb/index.php/api/index/getapps?keywords=' + this.$router.currentRoute.params.id)
         .then(msg => {
+          console.log(msg)
           this.SerchKeyword[0] = this.$router.currentRoute.params.id
           if (msg.data.code === 1) {
             this.notSearchShow = false
             this.SearchShow = true
+            this.imgHtml = msg.data.data
             this.SearchData = msg.data.data.length
+            this.dataType = []
+            for (let i = 0; i < this.imgHtml.length; i++) {
+              this.imgHtmlId[i] = this.imgHtml[i].id
+              this.dataType[i] = false
+            }
           }
         })
-        .catch(err => {
-          console.log(err)
-        })
+    },
+    preview (index) {
+      this.$router.push('/Preview' + this.imgHtmlId[index])
+    },
+    editor (index) {
+      this.$router.push('/Editor' + this.imgHtmlId[index])
     },
     getAppListH5 (type) {
       axios.get('http://hxb.scpoo.com/hxb/index.php/api/index/getapps', {
@@ -99,6 +108,7 @@ export default {
             this.SearchData = msg.data.data.length
             this.dataType = []
             for (let i = 0; i < this.imgHtml.length; i++) {
+              this.imgHtmlId[i] = this.imgHtml[i].id
               this.dataType[i] = false
             }
           }
@@ -116,18 +126,19 @@ export default {
     },
     getUserChangeSearch () {
       this.SerchKeyword[0] = String.trim(this.$refs.searchTip.value)
-      this.$set(this.SerchKeyword, 0, this.SerchKeyword[0])
+      this.$set(this.SerchKeyword, 0, String.trim(this.$refs.searchTip.value))
+      console.log(this.SerchKeyword)
     },
     gotoUserSearch () {
-      axios.get('http://hxb.scpoo.com/hxb/index.php/api/index/getapps', {
-        keywords: this.SerchKeyword[0]
-      })
+      this.getUserChangeSearch()
+      axios.get('http://hxb.scpoo.com/hxb/index.php/api/index/getapps?keywords=' + this.SerchKeyword[0])
         .then(msg => {
           if (msg.data.code === 1) {
             this.imgHtml = msg.data.data
             this.SearchData = msg.data.data.length
             this.dataType = []
             for (let i = 0; i < this.imgHtml.length; i++) {
+              this.imgHtmlId[i] = this.imgHtml[i].id
               this.dataType[i] = false
             }
           }

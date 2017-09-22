@@ -11,7 +11,6 @@ import Classify from '../page/index/Classify'
 import CompositeList from '../page/index/CompositeList'
 import Search from '../page/index/Search'
 import SearchList from '../page/index/SearchList'
-import NewCurriculum from '../page/index/NewCurriculum'
 import Editor from '../page/index/Editor'
 import HeaderNav from '../components/HeaderNav'
 import Student from '@/page/student/Student.vue'
@@ -47,7 +46,9 @@ import ListDetails from '../page/Curriculum marketing/ListDetails'
 import CouponList from '../page/Curriculum marketing/CouponList'
 import NewCoupon from '../page/Curriculum marketing/NewCoupon'
 import ChangePhoneNo from '@/page/school/ChangePhoneNo.vue'
-
+import RoleInfo from '@/page/school/RoleInfo.vue'
+import TeamInfo from '@/page/school/TeamInfo.vue'
+import AddPeople from '@/page/school/AddPeople.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -98,10 +99,10 @@ export default new Router({
       name: 'SearchList',
       component: SearchList
     },
-    {
-      path: '/NewCurriculum',
-      component: NewCurriculum
-    },
+    // {
+    //   path: '/NewCurriculum',
+    //   component: NewCurriculum
+    // },
     {
       path: '/Editor:id',
       name: 'Editor',
@@ -242,6 +243,18 @@ export default new Router({
     {
       path: '/ChangePhoneNo',
       component: ChangePhoneNo
+    },
+    {
+      path: '/RoleInfo',
+      component: RoleInfo
+    },
+    {
+      path: '/TeamInfo',
+      component: TeamInfo
+    },
+    {
+      path: '/AddPeople',
+      component: AddPeople
     }
   ]
 })

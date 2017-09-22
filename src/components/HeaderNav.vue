@@ -1,5 +1,5 @@
 <template>
-  <div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-draggable">
+  <div class="mui-off-canvas-wrap">
     <!--侧滑菜单部分-->
     <aside id="offCanvasSide" class="mui-off-canvas-left">
       <div id="offCanvasSideScroll" class="mui-scroll-wrapper">
@@ -67,12 +67,14 @@
         <a href="#offCanvasSide" class="mui-icon mui-action-menu mui-icon-bars mui-pull-left"></a>
         <a class="nav_logo"></a>
         <a class="mui-pull-right" v-if="searchIcon === 1" @tap="search"><img class="login_img" src="../../static/images/headLoge1(3).png"/> </a>
-        <a class="mui-pull-right"  v-if="classify === 1"  @tap="clsfy"><img class="login_img" src="../../static/images/headLogo1(1).png"/> </a>
+
+        <a class="mui-pull-right" v-if="classify === 1"  @tap="clsfy"><img class="login_img" src="../../static/images/headLogo1(1).png"/> </a>
+
       </header>
-      <div id="offCanvasContentScroll " class="mui-content mui-scroll-wrapper" style="overflow: auto;">
-
-        <slot></slot>
-
+      <div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper" style="overflow: auto;">
+				
+        	<slot></slot>
+				
       </div>
       <div class="mui-off-canvas-backdrop"></div>
     </div>

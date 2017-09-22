@@ -78,7 +78,7 @@
     font-size: 32px;
     width: 100%;
     background-color: #fff;
-    margin-top: 40px;
+    margin-top: 20px;
     text-align: center;
     border-color:#eeeeee;
     tr {

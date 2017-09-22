@@ -1,25 +1,33 @@
 <template>
-  <div class="add_school" id="ad_r">
-	<div class="add_head"><a href="">新增角色</a></div>
+  <div class="add_school" id="add_people">
+	<div class="add_head"><a href="">新增人员</a></div>
     <div class="add_content">
     	<table>
     		<tr>
-    			<td class="td_left">角色名称</td>
+    			<td class="td_left">姓名</td>
     			<td><input type="text" name="" value ="(请输名称,输入后不可修改)"></td>
     		</tr>
             <tr>
-                <td class="td_left">角色名称</td>
+                <td class="td_left">手机号码</td>
                 <td><input type="text" name="" value ="(请输名称,输入后不可修改)"></td>
             </tr>
+            <tr>
+                <td class="td_left">QQ号码</td>
+                <td><input type="text" name="" value ="(请输名称,输入后不可修改)"></td>
+            </tr>
+            <tr>
+                <td class="td_left">设置密码</td>
+                <td><input type="password" name="" value ="(请输名称,输入后不可修改)"></td>
+            </tr>
     		<tr>
-    			<td class="td_left" style="color: #2c618b;">角色权限</td>
+    			<td class="td_left" style="color: #2c618b;">角色确认</td>
     			<td>
     			    <select>
-	    				<option value="广东省 深圳市 南山区">a</option>
-	    				<option value="广东省 深圳市 南山区">b</option>
-	    				<option value="广东省 深圳市 南山区">c</option>
-	    				<option value="广东省 深圳市 南山区">d</option>
-	    				<option value="广东省 深圳市 南山区">e</option>
+	    				<option value="广东省 深圳市 南山区">广东省 深圳市 南山区</option>
+	    				<option value="广东省 深圳市 南山区">广东省 深圳市 南山区</option>
+	    				<option value="广东省 深圳市 南山区">广东省 深圳市 南山区</option>
+	    				<option value="广东省 深圳市 南山区">广东省 深圳市 南山区</option>
+	    				<option value="广东省 深圳市 南山区">广东省 深圳市 南山区</option>
     			    </select>
     			</td>
     		</tr>
@@ -27,7 +35,7 @@
     	
     </div>
     <div class="send"><a href="">提交</a></div>
-</div>	
+</div>
 </template>
 
 <script>
@@ -43,11 +51,11 @@ export default {
 
 <style scoped>
 
-  body,div,p,ul,li,a,dl,dt,dd,img,ol,input,table,tr,td,textarea,h1,h2,h3,h4,h5,h6,select {
+@charset "utf-8";
+body,div,p,ul,li,a,dl,dt,dd,img,ol,input,table,tr,td,textarea,h1,h2,h3,h4,h5,h6,select {
   margin: 0;
   padding: 0;
   outline: none;
-  text-decoration: none;
 }
 address, caption, cite, code, dfn, em, th, var, i, samp {
   font-style:normal;
@@ -112,9 +120,9 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 }
 
 *{font-family: "Microsoft YaHei" !important;}
-#ad_r .add_school{background-color: #eeeeee;}
-#ad_r .add_head{padding: 0.37rem}
-#ad_r .add_head a{font-size: 0.556rem;
+#add_people{background-color: #eeeeee;}
+#add_people .add_head{padding: 0.37rem}
+#add_people .add_head a{font-size: 0.556rem;
 	display: block;
 	color: #333;
 	text-align: center;
@@ -126,16 +134,16 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 	margin: 0 auto;
 	border-radius: 0.093rem;
 }
-#ad_r .add_content{margin: 0 auto;background-color: #fff;margin-left: 0.37rem;margin-right: 0.37rem}
-#ad_r .add_content table{width: 100%;}
-#ad_r .add_content tr{height: 1.667rem;border-bottom:1px solid #eee; font-size: 0.444rem;color: #999;}
-#ad_r .add_content tr td{padding-left: 0.5rem;}
-#ad_r .td_left{width: 25%;}
+#add_people .add_content{margin: 0 auto;background-color: #fff;margin-left: 0.37rem;margin-right: 0.37rem}
+#add_people .add_content table{width: 100%;}
+#add_people .add_content tr{height: 1.667rem;border-bottom:1px solid #eee; font-size: 0.444rem;color: #999;}
+#add_people .add_content tr td{padding-left: 0.5rem;}
+#add_people .td_left{width: 25%;}
 
-#ad_r .add_content input{width: 100%;font-size: 0.444rem;color: #999999;text-align: center;}
-#ad_r .add_content select{height: 1.667rem;font-size: 0.444rem;color: #999999;border: none;text-align: center;width: 100%;padding-left: 0.5rem;}
+#add_people .add_content input{width: 100%;font-size: 0.444rem;color: #999999;text-align: center;}
+#add_people .add_content select{height: 1.667rem;font-size: 0.444rem;color: #999999;border: none;text-align: center;width: 100%;padding-left: 0.5rem;}
 
-#ad_r .add_content .special{color: #2c618b;
+#add_people .add_content .special{color: #2c618b;
 	width: 2.222rem;
 	height: 0.889rem;
 	border: 1px solid #2c618b;
@@ -143,15 +151,14 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 	float:right;
 	margin-right:0.481rem;}
 
-#ad_r .send a{display: block;width: 9.37rem;
+#add_people .send a{display: block;width: 9.37rem;
 	height: 1.889rem;
 	background-color: #2c618b;
 	border-radius: 0.093rem;
 	text-align: center;color: #fff;
 	font-size: 0.593rem;
-line-height: 1.889rem;
-margin:0.926rem auto;
+    line-height: 1.889rem;
+    margin:0.926rem auto;
 }
-
 
 </style>

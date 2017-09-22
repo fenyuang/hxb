@@ -167,6 +167,7 @@ export default {
 <style scoped>
 	button { padding: 0;}
 	a { color: #185e96;}
+	input { border: 0;}
 	.mui-input-row { width: 9rem; height: 1.5rem; line-height: 1.5rem; margin: 0 auto;}
 	.mui-input-row input { height: 1.5rem; line-height: 1.5rem; font-size: 0.4rem;}
 	.mui-input-row .mui-input-clear~.mui-icon-clear, .mui-input-row .mui-input-password~.mui-icon-eye, .mui-input-row .mui-input-speech~.mui-icon-speech { width: 0.4rem; height: 0.4rem; top: 0.55rem; right: 0.55rem;}
@@ -174,7 +175,7 @@ export default {
 	.margin-pass { margin-top: 0.6rem;}
 	.mui-checkbox input[type=checkbox] { position: relative; right: 0; left: 0.5rem; height: 0.4rem; width: 0.4rem; line-height: 1rem;}
 	.mui-checkbox input[type=checkbox]:before { height: 0.4rem; width: 0.4rem; line-height: 1rem; color: #185E96; font-size: 0.8rem;}
-	.mui-checkbox label { width: 3.8rem; font-size: 0.4rem; padding-left: 1rem; padding-right: 0; height: 1rem; line-height: 1rem;}
+	.mui-checkbox label { width: 4.2rem; font-size: 0.4rem; padding-left: 1rem; padding-right: 0; height: 1rem; line-height: 1rem;}
 	.mui-checkbox .protocol { height: 1rem; line-height: 1rem; font-size: 0.4rem;}
 	.register-btn { width: 9rem; height: 1.5rem; line-height: 1.5rem; color: #fff; margin: 0.2rem auto; font-size: 0.5rem; background: #185e96; padding: 0;}
 	.get-code { background: #333; overflow: hidden; position: absolute; top: 0.1rem; right: 0.15rem;}

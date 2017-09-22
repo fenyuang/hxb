@@ -1,4 +1,5 @@
 <template>
+  <HeaderNav :classify = 0  :searchIcon = 0>
   <div class="addGrop">
     <div class="add_clue_btn">
       <input type="button" value="编辑线索"/>
@@ -7,11 +8,11 @@
     <form >
       <div class="add_clue_form">
         <div class="form_name">
-          <label for="name">回访人</label><input id="name" type="text" name="name"/>
+          <label for="name">回访人</label><input id="name" type="text" name="name" :value="clueInfo.name"/>
         </div>
         <div class="form_name">
           <label for="sex">性别</label>
-          <select name="sex" id="sex">
+          <select name="sex" id="sex" :value="clueInfo.sex">
             <option value="1">男</option>
             <option value="2">女</option>
           </select>
@@ -19,7 +20,7 @@
         </div>
         <div class="form_name">
           <label for="phone">电话</label>
-          <input id="phone" type="text" name="phone"/>
+          <input id="phone" type="text" name="phone" :value="clueInfo.phone"/>
         </div>
         <div class="form_name">
           <label for="occupation">职业</label>
@@ -33,13 +34,13 @@
         </div>
         <div class="form_name">
           <label for="clueRank">线索等级</label>
-          <select id="clueRank" name="grade" >
+          <select id="clueRank" name="grade" :value="clueInfo.grade" >
             <option :value="list.id" v-for="list in clueGrad">{{list.name}}</option>
           </select>
           <span class="triangle"></span>
         </div>
         <div class="form_name">
-          <label for="clueDetails">线索详情</label><input id="clueDetails" name="info" type="text" />
+          <label for="clueDetails">线索详情</label><input id="clueDetails" name="info" type="text" :value="clueInfo.info"/>
         </div>
         <div class="form_name" style="display: none">
           <input   name="type" type="text" value="3"/>
@@ -51,12 +52,29 @@
     </form>
 
     <!--添加按钮-->
-    <div class="add_btn" @tap="lineCon">
+    <div class="add_btn" @tap="function () { control = 1 }">
       <img src="../../../static/images/add.png"/>
     </div>
 
+    <div class="mask"  v-if="control === 1">
+      <div class="add_aleat">
+        <ul>
+          <li class="add_aleat_close" @tap="function () {control = 0 }">X</li>
+          <li class="add_aleat_add" @tap="addcLue">
+            <input type="button" value="新增线索"/>
+          </li>
+          <li class="add_aleat_add admin" @tap="clueHiMa">
+            <input type="button" value="线索等级管理 >"/>
+          </li>
+          <li class="add_aleat_add admin visit" @tap="LinevisitState">
+            <input type="button" value="回访状态管理 >"/>
+          </li>
+        </ul>
+      </div>
+    </div>
 
   </div>
+  </HeaderNav>
 </template>
 
 <script>
@@ -66,12 +84,20 @@
   export default {
     data () {
       return {
-        clueGrad: []
+        control: 0,
+        clueGrad: [],
+        clueInfo: {}
       }
     },
     methods: {
-      lineCon () {
-        this.$router.push('/Conversion')
+      LinevisitState () {
+        this.$router.push('/StateManagement')
+      },
+      addcLue () {
+        this.$router.push('/AddClue')
+      },
+      clueHiMa () {
+        this.$router.push('/ClueHierarchyManagement')
       },
       editClue () {
         var name = $('input[name="name"]').val()
@@ -83,10 +109,9 @@
         var condition = {id: this.$route.query.id, name: name, sex: sex, phone: phone, occupation: occupation, grade: grade, info: info}
         axios.post('http://hxb.scpoo.com/hxb/index.php/index/clue/clue_update', condition).then((res) => {
           if (res.status === 200) {
+            confirm(res.data.msg)
             if (res.data.ret === 100) {
-              if (confirm(res.data.msg)) {
-                this.$router.push({path: '/Conversion'})
-              }
+              this.$router.push({path: '/Conversion'})
             }
             return false
           } else {
@@ -99,10 +124,23 @@
       }
     },
     mounted () {
-      axios.post('http://hxb.scpoo.com/hxb/index.php/index/clue/clue_grade_list').then((res) => {
+      axios.post('http://hxb.scpoo.com/hxb/index.php/index/Clue/clue_grade_list').then((res) => {
         if (res.status === 200) {
           if (res.data.ret === 100) {
             this.clueGrad = res.data.data
+          }
+          return false
+        } else {
+          confirm(res.data.msg)
+        }
+      }).catch((err) => {
+        confirm(err)
+        return false
+      })
+      axios.post('http://hxb.scpoo.com/hxb/index.php/index/clue/clue_info', {id: this.$route.query.id}).then((res) => {
+        if (res.status === 200) {
+          if (res.data.ret === 100) {
+            this.clueInfo = res.data.data
           }
           return false
         } else {
@@ -189,36 +227,46 @@
       height: 80px;
     }
   }
-
-  .add_aleat {
-    width: 400px;
-    height: 300px;
+  .mask {
+    width: 100%;
+    height: 100%;
     position: fixed;
-    left: 21%;
-    bottom:13%;
-    z-index: 10px;
-    overflow: hidden;
-    background-color: #93c971;
-    color: white;
-    .add_aleat_close {
-      position: absolute;
-      right: 5px;
-      top:5px;
-      font-size: 40px;
-    }
-    .add_aleat_add {
-      input {
-        color: #fff;
-        background-color: #93c971;
-        width: 324px;
-        height: 60px;
-        border-color:#fff;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 12;
+    background-color: rgba(0, 0, 0, 0.5);
+    .add_aleat {
+      width: 400px;
+      height: 300px;
+      position: fixed;
+      left: 21%;
+      bottom: 13%;
+      z-index: 12;
+      overflow: hidden;
+      background-color: #93c971;
+      color: white;
+      .add_aleat_close {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        font-size: 40px;
       }
-      margin-left: 30px;
-      margin-top: 50px;
-    }
-    .admin {
-      margin-top: 30px;
+      .add_aleat_add {
+        input {
+          color: #fff;
+          background-color: #93c971;
+          width: 324px;
+          height: 60px;
+          border-color: #fff;
+        }
+        margin-left: 30px;
+        margin-top: 50px;
+      }
+      .admin {
+        margin-top: 30px;
+      }
     }
   }
 }

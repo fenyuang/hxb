@@ -23,7 +23,7 @@
 				<td class="td_left">订单状态</td><td class="td_right">{{StuOrderInfo.status==0?'已经预定':StuOrderInfo.status==10?'已经支付':'已回访'}}</td>
 			</tr>
 			<tr>
-				<td class="td_left">应用金额(元)</td><td class="td_right">{{StuOrderInfo.class_name}}</td>
+				<td class="td_left">应用金额(元)</td><td class="td_right">{{StuOrderInfo.meet_price}}</td>
 			</tr>
 		</table>
 	</div>

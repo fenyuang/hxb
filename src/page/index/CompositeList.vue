@@ -7,30 +7,30 @@
 						<a class="mui-navigate-right">按场景</a>
 						<ul class="mui-collapse-content">
 							<li class="mui-table-view-cell mui-active">全部</li>
-			        <li class="mui-table-view-cell" v-for="appclass0 in appClass[0]" @click="getAppListParamId('Scene', appclass0.id)">{{ appclass0.name }}</li>
+			        <li class="mui-table-view-cell" v-for="appclass0 in appClass[0]" @tap="getAppListParamId('Scene', appclass0.id)">{{ appclass0.name }}</li>
 						</ul>
 					</li>
 					<li class="mui-table-view-cell mui-collapse">
 						<a class="mui-navigate-right">按季节</a>
 						<ul class="mui-collapse-content">
 							<li class="mui-table-view-cell mui-active">全部</li>
-					      <li class="mui-table-view-cell" v-for="appclass1 in appClass[1]" @click="getAppListParamId('style', appclass1.id)">{{ appclass1.name }}</li>
+					      <li class="mui-table-view-cell" v-for="appclass1 in appClass[1]" @tap="getAppListParamId('style', appclass1.id)">{{ appclass1.name }}</li>
 						</ul>
 					</li>
 					<li class="mui-table-view-cell mui-collapse">
 						<a class="mui-navigate-right">按风格</a>
 						<ul class="mui-collapse-content">
 							<li class="mui-table-view-cell mui-active">全部</li>
-					      <li class="mui-table-view-cell" v-for="appclass2 in appClass[2]" @click="getAppListParamId('season', appclass2.id)">{{ appclass2.name }}</li>
+					      <li class="mui-table-view-cell" v-for="appclass2 in appClass[2]" @tap="getAppListParamId('season', appclass2.id)">{{ appclass2.name }}</li>
 						</ul>
 					</li>
 					<li class="mui-table-view-cell mui-collapse">
 						<a class="mui-navigate-right">按类型</a>
 						<ul class="mui-collapse-content">
 							<li class="mui-table-view-cell mui-active">全部</li>
-					        <li class="mui-table-view-cell" @click="getAppListType('h5')">微场景</li>
-					        <li class="mui-table-view-cell" @click="getAppListType('spa')">微网页</li>
-					        <li class="mui-table-view-cell" @click="getAppListType('wpa')">微信图文</li>
+					        <li class="mui-table-view-cell" @tap="getAppListType('h5')">微场景</li>
+					        <li class="mui-table-view-cell" @tap="getAppListType('spa')">微网页</li>
+					        <li class="mui-table-view-cell" @tap="getAppListType('wpa')">微信图文</li>
 						</ul>
 					</li>
 				</ul>
@@ -39,19 +39,19 @@
 	
 		<div id="imgCon">
 	    <ul class="mui-table-view mui-grid-view">
-	    	<li class="mui-table-view-cell mui-media mui-col-xs-6 imgCon" v-for="(imghtml, index) in imgHtml" @click="clickSee(index)">
+	    	<li class="mui-table-view-cell mui-media mui-col-xs-6 imgCon" v-for="(imghtml, index) in imgHtml" @tap.stop="clickSee(index)">
 		      <a>
 		      	<p class="wap_pic"><img class="mui-media-object" :src=" imghtml.cover "></p>
 		      	<div class="mui-media-body"> {{ imghtml.title }} </div>
 		      	<div class="look_for">
 		      		<p><img src="../../../static/images/browse.png"><span>&nbsp;{{ imghtml.read_num }}</span></p>
-		      		<p><img src="../../../static/images/selected.png"><span>&nbsp;{{ imghtml.share_num }}{{ imghtml.seen }}</span></p>
+		      		<p><img src="../../../static/images/selected.png"><span>&nbsp;{{ imghtml.share_num }}</span></p>
 		      	</div>
 		      </a>
 		      <div class="masker" v-show=" dataType[index] "></div>
 		      <div class="mask" v-show=" dataType[index] ">
-		      	<p><router-link class="preview mask_common" :to="{ name: 'Preview', params: { id: imghtml.id }}">预览</router-link>
-		      	<router-link class="use mask_common" :to="{ name: 'Editor', params: { id: imghtml.id }}">使用</router-link></p>
+		      	<p><a class="preview mask_common" @tap.stop="preview(index)">预览</a>
+		      	<a class="use mask_common" @tap.stop="editor(index)">使用</a></p>
 		      </div>
 		    </li>
 	    </ul>    
@@ -66,6 +66,7 @@ export default {
   data () {
     return {
       appClass: [],
+      imgHtmlId: [],
       dataType: [],
       imgHtml: [],
       imgLength: [],
@@ -88,7 +89,7 @@ export default {
         })
     }
     setTimeout(this.getAppList, 100)
-    window.addEventListener('scroll', this.addImgHtml)
+    window.addEventListener('touchmove', this.addImgHtml)
   },
   methods: {
     getAppList () {
@@ -101,12 +102,18 @@ export default {
               this.dataLength[0] = 10
               for (let i = 0; i < 10; i++) {
                 this.imgHtml[i] = this.allMsgData[i]
+                this.imgHtmlId[i] = this.allMsgData[i].id
                 this.dataType[i] = false
                 this.$set(this.imgHtml, i, this.allMsgData[i])
               }
             } else {
               this.dataLength[0] = this.allMsgData.length
-              this.imgHtml = this.allMsgData
+              for (let i = 0; i < this.allMsgData.length; i++) {
+                this.imgHtml[i] = this.allMsgData[i]
+                this.imgHtmlId[i] = this.allMsgData[i].id
+                this.dataType[i] = false
+                this.$set(this.imgHtml, i, this.allMsgData[i])
+              }
             }
           }
         })
@@ -124,12 +131,18 @@ export default {
               this.dataLength[0] = 10
               for (let i = 0; i < 10; i++) {
                 this.imgHtml[i] = this.allMsgData[i]
+                this.imgHtmlId[i] = this.allMsgData[i].id
                 this.dataType[i] = false
                 this.$set(this.imgHtml, i, this.allMsgData[i])
               }
             } else {
               this.dataLength[0] = this.allMsgData.length
-              this.imgHtml = this.allMsgData
+              for (let i = 0; i < this.allMsgData.length; i++) {
+                this.imgHtml[i] = this.allMsgData[i]
+                this.imgHtmlId[i] = this.allMsgData[i].id
+                this.dataType[i] = false
+                this.$set(this.imgHtml, i, this.allMsgData[i])
+              }
             }
           }
         })
@@ -147,22 +160,34 @@ export default {
               this.dataLength[0] = 10
               for (let i = 0; i < 10; i++) {
                 this.imgHtml[i] = this.allMsgData[i]
+                this.imgHtmlId[i] = this.allMsgData[i].id
                 this.dataType[i] = false
                 this.$set(this.imgHtml, i, this.allMsgData[i])
               }
             } else {
               this.dataLength[0] = this.allMsgData.length
-              this.imgHtml = this.allMsgData
+              for (let i = 0; i < this.allMsgData.length; i++) {
+                this.imgHtml[i] = this.allMsgData[i]
+                this.imgHtmlId[i] = this.allMsgData[i].id
+                this.dataType[i] = false
+                this.$set(this.imgHtml, i, this.allMsgData[i])
+              }
             }
           }
         })
+    },
+    preview (index) {
+      this.$router.push('/Preview' + this.imgHtmlId[index])
+    },
+    editor (index) {
+      this.$router.push('/Editor' + this.imgHtmlId[index])
     },
     clickSee (index) {
       if (!this.dataType[index]) {
         for (let i = 0; i < this.dataType.length; i++) {
           this.dataType[i] = false
         }
-        this.$set(this.dataType, index, !this.dataType[index].seen)
+        this.$set(this.dataType, index, !this.dataType[index])
       } else {
         this.$set(this.dataType, index, false)
       }
@@ -173,12 +198,14 @@ export default {
           if (this.imgLength[0] >= this.dataLength[0] + 6) {
             for (let i = this.dataLength[0]; i < this.dataLength[0] + 6; i++) {
               this.imgHtml[i] = this.allMsgData[i]
+              this.imgHtmlId[i] = this.allMsgData[i].id
               this.dataType[i] = false
               this.$set(this.imgHtml, i, this.allMsgData[i])
             }
           } else if (this.imgLength[0] > this.dataLength[0]) {
             for (let i = this.dataLength[0]; i < this.allMsgData.length; i++) {
               this.imgHtml[i] = this.allMsgData[i]
+              this.imgHtmlId[i] = this.allMsgData[i].id
               this.dataType[i] = false
               this.$set(this.imgHtml, i, this.allMsgData[i])
             }

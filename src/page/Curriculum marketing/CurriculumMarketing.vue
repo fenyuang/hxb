@@ -32,7 +32,7 @@
             <span class="triangle laiyuan"></span>
           </li>-->
 
-          <li class="search_select" >
+          <li class="search_select" style="margin-right: 10px;float: right;">
             <select name="kcstatus" class="search_select_option" @change="kcStatus">
               <option value="">课程状态</option>
               <option value="1">上架</option>
@@ -40,15 +40,19 @@
             </select>
             <span class="triangle laiyuan"></span>
           </li>
+          <li id="search_kcdiv" style="display:none;">
+            <input type="text" name="kc_name" class="search_input" placeholder="请输入课程名称"/>
+            <input type="button" class="search_button" value="确定" @tap="searchkcGo"/>
+          </li>
           <br style="clear: both;">
         </ul>
 
-        <div id="search_kcdiv" class="search_class" style="display:none;">
-          <div class="kongbaiBg"></div>
-          <input type="text" name="kc_name"  value="">
-          <input type="button" class="clisub" @tap="searchkcGo" value="搜索">
-          <br style="clear: both;"/>
-        </div>
+        <!--<div id="search_kcdiv" class="search_class" style="display:none;">-->
+          <!--<div class="kongbaiBg"></div>-->
+          <!--<input type="text" name="kc_name"  value="">-->
+          <!--<input type="button" class="clisub" @tap="searchkcGo" value="搜索">-->
+          <!--<br style="clear: both;"/>-->
+        <!--</div>-->
         <div  style="clear: both;" class="kongbaiBg"></div>
 
 
@@ -85,32 +89,35 @@
               <div id="inptext" style="padding-right:15px;" @tap="tigginput">订单编号</div>
               <span class="triangle laiyuan"></span>
           </li>
-          <li class="search_select" >
-            <select name="search_select"  class="search_select_option">
+          <li class="search_select" style="float: right;margin-right: 10px;width: 56%;">
+            <select name="times"  class="search_select_option" @change="timeSearch">
               <option>创建时间</option>
-              <option>线索1</option>
-              <option>线索来源2</option>
+              <option  v-for="list in info">{{list.addtime}}</option>
             </select>
             <span class="triangle laiyuan"></span>
           </li>
 
-          <li class="search_select" >
-            <select name="order_status" class="search_select_option" @change="orderStatus">
-              <option value="">订单状态</option>
-              <option value="0">已预订</option>
-              <!-- <option value="10">已支付</option> -->
-              <!-- <option value="20">已回访</option> -->
-            </select>
-            <span class="triangle laiyuan"></span>
+          <!--<li class="search_select" >-->
+            <!--<select name="order_status" class="search_select_option" @change="orderStatus">-->
+              <!--<option value="">订单状态</option>-->
+              <!--<option value="0">已预订</option>-->
+               <!--<option value="10">已支付</option> -->
+               <!--<option value="20">已回访</option> -->
+            <!--</select>-->
+            <!--<span class="triangle laiyuan"></span>-->
+          <!--</li>-->
+          <li id="search_div"  style="display:none;">
+            <input type="text" name="order_sn" class="search_input" placeholder="请输入订单编号"/>
+            <input type="button" class="search_button" value="确定" @tap="searchGo"/>
           </li>
 
           <br style="clear: both;">
         </ul>
-        <div id="search_div" class="search_class" style="display:none;">
-          <div class="kongbaiBg"></div>
-          <input type="text" name="order_sn"  value="">
-          <input type="button" class="clisub" @tap="searchGo" value="搜索">
-      </div>
+        <!--<div id="search_div" class="search_class" style="display:none;">-->
+          <!--<div class="kongbaiBg"></div>-->
+          <!--<input type="text" name="order_sn"  value="">-->
+          <!--<input type="button" class="clisub" @tap="searchGo" value="搜索">-->
+      <!--</div>-->
         <div  style="clear: both;" class="kongbaiBg"></div>
 
         <ul class="Info">
@@ -159,20 +166,23 @@
       <img src="../../../static/images/add.png"  />
     </div>
 
-    <div class="add_aleat" v-show="addClass === 1">
-      <ul>
-        <li class="add_aleat_close" @tap="function () {addClass = 0 }">X</li>
-        <li class="add_aleat_add">
-          <input type="button" value="分类管理"/>
-        </li>
-        <li class="add_aleat_add admin" @tap="lineChapterMan">
-          <input type="button" value="章节管理 >"/>
-        </li>
-        <li class="add_aleat_add admin visit" @tap="lineNewCurriculum">
-          <input type="button" value="新增课程"/>
-        </li>
-      </ul>
+    <div class="mask"  v-if="addClass === 1">
+      <div class="add_aleat">
+        <ul>
+          <li class="add_aleat_close" @tap="function () {addClass = 0 }">X</li>
+          <li class="add_aleat_add">
+            <input type="button" value="分类管理"/>
+          </li>
+          <li class="add_aleat_add admin" @tap="lineChapterMan">
+            <input type="button" value="章节管理 >"/>
+          </li>
+          <li class="add_aleat_add admin visit" @tap="lineNewCurriculum">
+            <input type="button" value="新增课程"/>
+          </li>
+        </ul>
+      </div>
     </div>
+
 
     <!--回到顶部-->
     <div class="back_top" @tap="backTOP">
@@ -238,11 +248,11 @@
         })
       },
       /* 线索来源搜索（最新线索） */
-      orderStatus () {
-        var status = $('select[name="order_status"]').val()
-        this.condition = '&status=' + status
-        this.getOrderlist(this.condition)
-      },
+//      orderStatus () {
+//        var status = $('select[name="order_status"]').val()
+//        this.condition = '&status=' + status
+//        this.getOrderlist(this.condition)
+//      },
       kcStatus () {
         var kcstatus = $('select[name="kcstatus"]').val()
         this.kcstatus = {status: kcstatus}
@@ -265,6 +275,11 @@
         var kcname = $('input[name="kc_name"]').val()
         this.kc_name = {name: kcname}
         this.getCourse(this.kc_name)
+      },
+      timeSearch () {
+        let times = $('select[name="times"]').val()
+        let time = {start_time: times}
+        this.getOrderlist(time)
       }
     },
     mounted () {
@@ -281,23 +296,6 @@
 </script>
 
 <style scoped lang="less">
-  .search_class {
-    height: 50px;
-    input {
-      float: left;
-      width: 80%;
-      display: inline-block;
-      margin-bottom: 0px;
-    }
-    .clisub {
-      width: 18%;
-      height:80px;
-      margin-left: 2%;
-      float: left;
-      background-color:#2c618b;
-      color: #fff;
-    }
-  }
   .grop {
     background-color: #fff;
     .add_btn {
@@ -322,48 +320,13 @@
     .mask {
       width: 100%;
       height: 100%;
-      position: absolute;
+      position: fixed;
       top:0;
       left: 0;
       bottom: 0;
       right:0;
       z-index: 12;
       background-color: rgba(0, 0, 0, 0.5);
-      .dele {
-        position: absolute;
-        font-size: 34px;
-        width: 85%;
-        top: 20%;
-        left: 7%;
-        padding-bottom:40px;
-        background-color: #93c971;
-        color: #fff;
-        .add_aleat_close {
-          position: absolute;
-          right: 5px;
-          top:5px;
-          font-size: 40px;
-          z-index: 12;
-        }
-        .msg {
-          text-align: center;
-          line-height: 50px;
-          margin-left: 30px;
-          margin-top: 50px;
-        }
-        .dele_btn {
-          margin-left: 50px;
-          margin-top: 50px;
-          input {
-            color: #fff;
-            background-color: #93c971;
-            width: 120px;
-            height: 60px;
-            border-color:#fff;
-            margin-left: 100px;
-          }
-        }
-      }
     }
 
     .add_aleat {
@@ -372,7 +335,7 @@
       position: fixed;
       left: 21%;
       bottom:13%;
-      z-index: 10px;
+      z-index: 12;
       overflow: hidden;
       background-color: #93c971;
       color: white;
@@ -406,7 +369,7 @@
         text-align: center;
         float: left;
         position: relative;
-        width: 33%;
+        width: 40%;
         line-height: 80px;
         .search_select_option {
           font-size: 34px;

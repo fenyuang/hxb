@@ -1,15 +1,15 @@
 <template>
 	<HeaderNav :classify=1 :searchIcon=1>
-		<div class="mui-slider">
+		<div class="mui-slider" id="mui-slider-index">
 	  	<div class="mui-slider-group mui-slider-loop">
 		    <!--支持循环，需要重复图片节点-->
-		    <div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="/static/images/banner01.png" /></a></div>
-		    <div class="mui-slider-item"><a href="#"><img src="/static/images/banner01.png" /></a></div>
-		    <div class="mui-slider-item"><a href="#"><img src="/static/images/banner01.png" /></a></div>
-		    <div class="mui-slider-item"><a href="#"><img src="/static/images/banner01.png" /></a></div>
-		    <div class="mui-slider-item"><a href="#"><img src="/static/images/banner01.png" /></a></div>
+		    <div class="mui-slider-item mui-slider-item-duplicate"><a><img src="../../../static/images/banner01.png" /></a></div>
+		    <div class="mui-slider-item"><a><img src="../../../static/images/banner01.png" /></a></div>
+		    <div class="mui-slider-item"><a><img src="../../../static/images/banner01.png" /></a></div>
+		    <div class="mui-slider-item"><a><img src="../../../static/images/banner01.png" /></a></div>
+		    <div class="mui-slider-item"><a><img src="../../../static/images/banner01.png" /></a></div>
 		    <!--支持循环，需要重复图片节点-->
-		    <div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="/static/images/banner01.png" /></a></div>
+		    <div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="../../../static/images/banner01.png" /></a></div>
 		 	</div>
 		</div>
 		
@@ -32,7 +32,7 @@
 		
 		<div id="imgCon">
 	    <ul class="mui-table-view mui-grid-view">
-	    	<li class="mui-table-view-cell mui-media mui-col-xs-6 imgCon" v-for="(imghtml, index) in imgHtml" @tap="clickSee(index)">
+	    	<li class="mui-table-view-cell mui-media mui-col-xs-6 imgCon" v-for="(imghtml, index) in imgHtml" @tap.stop="clickSee(index)">
 		      <a>
 		      	<p class="wap_pic"><img class="mui-media-object" :src=" imghtml.cover "></p>
 		      	<div class="mui-media-body"> {{ imghtml.title }} </div>
@@ -43,8 +43,8 @@
 		      </a>
 		      <div class="masker" v-show=" dataType[index] "></div>
 		      <div class="mask" v-show=" dataType[index] ">
-		      	<p><a class="preview mask_common" @tap="preview(index)">预览</a>
-		      	<a class="use mask_common" @tap="editor(index)">使用</a></p>
+		      	<p><a class="preview mask_common" @tap.stop="preview(index)">预览</a>
+		      	<a class="use mask_common" @tap.stop="editor(index)">使用</a></p>
 		      </div>
 		    </li>
 	    </ul>    
@@ -86,9 +86,11 @@ export default {
             }
           } else {
             this.dataLength[0] = this.allMsgData.length
-            this.imgHtml = this.allMsgData
             for (let i = 0; i < this.allMsgData.length; i++) {
+              this.imgHtml[i] = this.allMsgData[i]
               this.imgHtmlId[i] = this.allMsgData[i].id
+              this.dataType[i] = false
+              this.$set(this.imgHtml, i, this.allMsgData[i])
             }
           }
         }
@@ -116,9 +118,11 @@ export default {
               }
             } else {
               this.dataLength[0] = this.allMsgData.length
-              this.imgHtml = this.allMsgData
               for (let i = 0; i < this.allMsgData.length; i++) {
+                this.imgHtml[i] = this.allMsgData[i]
                 this.imgHtmlId[i] = this.allMsgData[i].id
+                this.dataType[i] = false
+                this.$set(this.imgHtml, i, this.allMsgData[i])
               }
             }
           }

@@ -52,10 +52,26 @@
     </form>
 
     <!--添加按钮-->
-    <div class="add_btn" @tap="lineConver">
+    <div class="add_btn" @tap="function () {controllor = 1}">
       <img src="../../../static/images/add.png"/>
     </div>
 
+    <div class="mask"  v-if="controllor === 1">
+      <div class="add_aleat">
+        <ul>
+          <li class="add_aleat_close" @tap="function () {controllor = 0 }">X</li>
+          <li class="add_aleat_add" @tap="addcLue">
+            <input type="button" value="新增线索"/>
+          </li>
+          <li class="add_aleat_add admin" @tap="clueHiMa">
+            <input type="button" value="线索等级管理 >"/>
+          </li>
+          <li class="add_aleat_add admin visit" @tap="LinevisitState">
+            <input type="button" value="回访状态管理 >"/>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
   </HeaderNav>
 </template>
@@ -67,13 +83,20 @@
   export default {
     data () {
       return {
+        controllor: 0,
         visitState: [],
         classList: []
       }
     },
     methods: {
-      lineConver () {
-        this.$router.push('/Conversion')
+      LinevisitState () {
+        this.$router.push('/StateManagement')
+      },
+      addcLue () {
+        this.$router.push('/AddClue')
+      },
+      clueHiMa () {
+        this.$router.push('/ClueHierarchyManagement')
       },
       visitAdmin () {
         var name = $('input[name="name"]').val()
@@ -200,35 +223,46 @@
       }
     }
 
-    .add_aleat {
-      width: 400px;
-      height: 300px;
+    .mask {
+      width: 100%;
+      height: 100%;
       position: fixed;
-      left: 21%;
-      bottom:13%;
-      z-index: 10px;
-      overflow: hidden;
-      background-color: #93c971;
-      color: white;
-      .add_aleat_close {
-        position: absolute;
-        right: 5px;
-        top:5px;
-        font-size: 40px;
-      }
-      .add_aleat_add {
-        input {
-          color: #fff;
-          background-color: #93c971;
-          width: 324px;
-          height: 60px;
-          border-color:#fff;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      z-index: 12;
+      background-color: rgba(0, 0, 0, 0.5);
+      .add_aleat {
+        width: 400px;
+        height: 300px;
+        position: fixed;
+        left: 21%;
+        bottom: 13%;
+        z-index: 12;
+        overflow: hidden;
+        background-color: #93c971;
+        color: white;
+        .add_aleat_close {
+          position: absolute;
+          right: 5px;
+          top: 5px;
+          font-size: 40px;
         }
-        margin-left: 30px;
-        margin-top: 50px;
-      }
-      .admin {
-        margin-top: 30px;
+        .add_aleat_add {
+          input {
+            color: #fff;
+            background-color: #93c971;
+            width: 324px;
+            height: 60px;
+            border-color: #fff;
+          }
+          margin-left: 30px;
+          margin-top: 50px;
+        }
+        .admin {
+          margin-top: 30px;
+        }
       }
     }
   }

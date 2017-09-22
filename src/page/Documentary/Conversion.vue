@@ -35,7 +35,7 @@
             </li>
             <li v-if="searchInfo === 1">
               <input type="text" name="item1_name" class="search_input" placeholder="请输入姓名"/>
-              <input type="button" class="search_button" value="确定" @click="search_name1"/>
+              <input type="button" class="search_button" value="确定" @tap="search_name1"/>
             </li>
             <br style="clear: both;">
           </ul>
@@ -114,6 +114,8 @@
               <li>
                 <input type="button" value="回访" class="info_btn"  @tap="LinevisitAdmin(list.id)"/>
                 <input type="button" value="编辑"  class="info_btn" @tap="lineEditoVisit(list.id)"/>
+                <input type="button" value="报名"  class="info_btn" @tap="signUp(list.id)" />
+                <input type="button" value="作废"  class="info_btn"style="background-color: #999999;" @tap="showMask(list.id)"/>
               </li>
             </ul>
             <br style="clear: both;">
@@ -145,7 +147,8 @@
       <img src="../../../static/images/add.png"/>
     </div>
 
-    <div class="add_aleat" v-if="searchInfo === 4">
+    <div class="mask"  v-if="searchInfo === 4">
+      <div class="add_aleat">
         <ul>
           <li class="add_aleat_close" @tap="function () {searchInfo = 0 }">X</li>
           <li class="add_aleat_add" @tap="addcLue">
@@ -158,7 +161,9 @@
             <input type="button" value="回访状态管理 >"/>
           </li>
         </ul>
+      </div>
     </div>
+
 
     <!--回到顶部-->
     <div class="back_top" @tap="backTop">
@@ -355,7 +360,7 @@
     .mask {
       width: 100%;
       height: 100%;
-      position: absolute;
+      position: fixed;
       top:0;
       left: 0;
       bottom: 0;
@@ -404,7 +409,7 @@
       position: fixed;
       left: 21%;
       bottom:13%;
-      z-index: 10px;
+      z-index: 12;
       overflow: hidden;
       background-color: #93c971;
       color: white;

@@ -1,6 +1,7 @@
 <template>
   <HeaderNav :classify = 0 :searchIcon = 0>
-  <div class="Clue_hierarchy">
+    <h5 style="text-align: center;margin-top: 20px;font-size: 18px;" v-if="ClueMan.length === 0">该状态下暂无回访记录！</h5>
+    <div class="Clue_hierarchy" v-else>
       <table cellspacing="0" cellpadding="2" border="1" >
          <tr v-for="(list, index) in ClueMan">
            <td class="Clue_hierarchy_name">
@@ -33,8 +34,7 @@
       }
     },
     mounted () {
-      axios.post('http://hxb.scpoo.com/hxb/index.php/index/clue/clue_grade_list').then((res) => {
-        console.log(res)
+      axios.post('http://hxb.scpoo.com/hxb/index.php/index/clue/visit_list', {status: this.$route.query.id}).then((res) => {
         if (res.data.ret === 100) {
           this.ClueMan = res.data.data
         } else {

@@ -55,6 +55,7 @@ export default {
 
 <style scoped>
 	ul,ol,li { list-style: none;}
+	input { border: 0;}
 	.mui-input-row { width: 9rem; height: 1.5rem; line-height: 1.5rem; margin: 0.1rem auto;}
 	.mui-input-row input { height: 1.5rem !important; line-height: 1.5rem !important; font-size: 0.4rem;}
 	.mui-input-row .mui-input-clear~.mui-icon-clear, .mui-input-row .mui-input-password~.mui-icon-eye { width: 0.4rem; height: 0.4rem; top: 0.55rem; right: 0.55rem;}

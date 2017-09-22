@@ -30,6 +30,7 @@
     <div class="cards"> 
       <div class="tab_card" v-show='curIndex === 0'>
             <div class="tab2 tab3">
+            <a href="#/RoleInfo">
               <ul>
                   <li class="tab2_top">
                       <span style="color: #333333">超级管理员</span>
@@ -41,7 +42,9 @@
                       <span>2017/03/20 16:00</span>
                   </li>
               </ul>
-              <ul>
+            </a>
+            <a href="#/RoleInfo">
+                 <ul>
                   <li class="tab2_top">
                       <span style="color: #333333">校长</span>
                       <span class="control">操作者</span>
@@ -51,7 +54,9 @@
                       <span>President</span>
                       <span>2017/03/20 16:00</span>
                   </li>
-              </ul>
+              </ul>   
+            </a>
+            <a href="#/RoleInfo">
               <ul>
                   <li class="tab2_top">
                       <span style="color: #333333">全职老师</span>
@@ -63,30 +68,38 @@
                       <span>2017/03/20 16:00</span>
                   </li>
               </ul>
+            </a>
                 <div class="add"><a href="#/AddRole"></a></div>
           </div>
       </div>  
-
           <!--    团队管理 -->
       <div class="tab_card"  v-show='curIndex === 1'>
-               <div class="tab2 tab3 tab4" >
+            <div class="tab2 tab3 tab4" >
+            <a href="#/TeamInfo">
+                <ul>
+                    <li class="tab2_top"><span style="color: #333333">付露</span><span>已经预定</span></li>
+                    <li class="tab2_bottom"><span>12345678910</span><span>2017/03/20 16:00</span></li>
+                </ul>
+            </a>
+            <a href="#/TeamInfo">
               <ul>
                   <li class="tab2_top"><span style="color: #333333">付露</span><span>已经预定</span></li>
                   <li class="tab2_bottom"><span>12345678910</span><span>2017/03/20 16:00</span></li>
               </ul>
+            </a>
+            <a href="#/TeamInfo">
               <ul>
                   <li class="tab2_top"><span style="color: #333333">付露</span><span>已经预定</span></li>
                   <li class="tab2_bottom"><span>12345678910</span><span>2017/03/20 16:00</span></li>
               </ul>
-              <ul>
-                  <li class="tab2_top"><span style="color: #333333">付露</span><span>已经预定</span></li>
-                  <li class="tab2_bottom"><span>12345678910</span><span>2017/03/20 16:00</span></li>
-              </ul>
-          </div>  
+            </a>
+          </div> 
+          <div class="box"></div> 
+          <div class="add"><a href="#/AddPeople"></a></div>
       </div>
-      <div class="box"></div>
+      
       </div>
-      <div class="add"><a href="#/AddRole"></a></div>
+      
     </div>
 </div>
 </template>

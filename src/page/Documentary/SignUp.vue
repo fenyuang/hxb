@@ -5,7 +5,7 @@
       <div class="singUp_form">
         <h3>报名</h3>
         <div class="singUp_form_name">
-          <label for="name">姓名</label><input type="text" name="name" id="name"/>
+          <label for="name">姓名</label><input type="text" name="name" id="name" :placeholder="curri.name"/>
         </div>
         <div class="singUp_form_name">
           <label for="curriculum">选择课程</label>
@@ -55,7 +55,6 @@
         let applicant = $('input[name = "name"]').val()
         let courseId = $('select[name = "curriculum"]').val()
         let classId = $('select[name = "class"]').val()
-        console.log(this.$route.query.id)
         axios.post('http://hxb.scpoo.com/hxb/index.php/index/Clue/clue_edit', {id: this.$route.query.id, applicant: applicant, course_id: courseId, class_id: classId}).then((res) => {
           if (res.data.ret === 100) {
             if (confirm(res.data.msg)) {
@@ -68,7 +67,7 @@
       }
     },
     mounted () {
-      axios.post('http://hxb.scpoo.com/hxb/index.php/index/course/course_list').then((res) => {
+      axios.post('http://hxb.scpoo.com/hxb/index.php/index/Clue/clue_info', {id: this.$route.query.id}).then((res) => {
         if (res.data.ret === 100) {
           this.curri = res.data.data
         } else {
