@@ -5,24 +5,25 @@
     	<table>
     		<tr>
     			<td class="td_left">角色名称</td>
-    			<td><input type="text" name="name" id="quan_name" placeholder="(请输名称,输入后不可修改)" value=""></td>
+    			<td><input type="text" name="name" class="inputText" id="quan_name" placeholder="(请输名称,输入后不可修改)" value=""></td>
     		</tr>
             <tr>
                 <td class="td_left">备注名称</td>
-                <td><input type="text" name="beizhu" id="quan_beizhu"  placeholder="(请输名称,输入后不可修改)" value=""></td>
+                <td><input type="text" name="beizhu" class="inputText" id="quan_beizhu"  placeholder="(请输名称,输入后不可修改)" value=""></td>
             </tr>
     		<tr>
     			<td class="td_left" style="color: #2c618b;">角色权限</td>
     			<td>
-    			    <select>
-	    				 <option :value="list.id" v-for="list in rolelsit">{{list.description}}</option>
-    			    </select>
+    			    <!-- <select>
+                                <option :value="list.id" v-for="list in rolelist">{{list.description}}</option>
+                            </select> -->
+              <span class="right" v-for="(list,index) in rolelist">{{list.description}}<input type="checkbox" v-bind:value="index+1+''" v-model="role_id"></span>
     			</td>
     		</tr>
     	</table>
-    	
+    	{{role_id}}
     </div>
-    <div class="send"><a @click="subadd">提交</a></div>
+    <div class="send"><a v-on:click="subadd">提交</a></div>
 </div>	
 </template>
 
@@ -35,14 +36,15 @@ export default {
     return {
       tabsName: ['角色管理', '团队管理'],
       curIndex: 0,
-      rolelsit: []
+      rolelist: [],
+      role_id: []
     }
   },
   methods: {
     tabsSwitch: function (x) {
       this.curIndex = x
     },
-    subadd () {
+    subadd: function () {
       var name = $('#quan_name').val()
       var beizhu = $('#quan_beizhu').val()
       if (name === '') {
@@ -53,14 +55,14 @@ export default {
         alert('填写备注')
         return false
       }
-      this.datas = {name: name, description: beizhu, role_id: ['1', '2']}
+      this.datas = {name: name, description: beizhu, role_id: this.role_id}
       this.getAddrole(this.datas)
     },
-    getRolelist () {
+    getRolelist: function () {
       axios.post('http://hxb.scpoo.com/hxb/index.php/index/Power/getInterfacelsit').then((res) => {
         if (res.status === 200) {
           if (res.data.ret === 100) {
-            this.rolelsit = res.data.data
+            this.rolelist = res.data.data
           } else {
             console.log(res.data.msg)
           }
@@ -69,7 +71,7 @@ export default {
         console.log(err)
       })
     },
-    getAddrole (datas) {
+    getAddrole: function (datas) {
       axios.post('http://hxb.scpoo.com/hxb/index.php/index/Power/getRoleadd', datas).then((res) => {
         if (res.status === 200) {
           if (res.data.ret === 100) {
@@ -83,7 +85,7 @@ export default {
       })
     }
   },
-  mounted () {
+  mounted: function () {
     this.getRolelist()
   }
 }
@@ -180,7 +182,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 #ad_r .add_content tr td{padding-left: 0.5rem;}
 #ad_r .td_left{width: 25%;}
 
-#ad_r .add_content input{width: 100%;font-size: 0.444rem;color: #999999;text-align: center;}
+#ad_r .add_content .inputText{width: 100%;font-size: 0.444rem;color: #999999;text-align: center;}
 #ad_r .add_content select{height: 1.667rem;font-size: 0.444rem;color: #999999;border: none;text-align: center;width: 100%;padding-left: 0.5rem;}
 
 #ad_r .add_content .special{color: #2c618b;
@@ -189,16 +191,19 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 	border: 1px solid #2c618b;
 	border-radius: 0.093rem;
 	float:right;
-	margin-right:0.481rem;}
-
+	margin-right:0.481rem;
+}
+#ad_r .add_content .right{
+  margin-right:0.2rem;
+}
 #ad_r .send a{display: block;width: 9.37rem;
 	height: 1.889rem;
 	background-color: #2c618b;
 	border-radius: 0.093rem;
 	text-align: center;color: #fff;
 	font-size: 0.593rem;
-line-height: 1.889rem;
-margin:0.926rem auto;
+  line-height: 1.889rem;
+  margin:0.926rem auto;
 }
 
 

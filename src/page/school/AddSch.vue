@@ -1,11 +1,12 @@
-``<template>
+<template>
+<form action="http://hxb.scpoo.com/hxb/index.php/index/branchschool/branchschool_add" method="post" enctype="multipart/form-data">
  <div class="add_school" id="ap_sch">
 	<div class="add_head">添加校区</div>
     <div class="add_content">
     	<table>
     		<tr>
     			<td class="td_left">校区名称</td>
-    			<td class="td_input"><input type="text" v-model="name" placeholder="输入学校名称" value=""/></td>
+    			<td class="td_input"><input type="text" name="name" placeholder="输入学校名称" value="新东方南山校区"/></td>
     		</tr>
     		<tr>
     			<td class="td_left">校区位置</td>
@@ -13,11 +14,7 @@
             <tr>
               <td class="one">
                 <select>
-                    <option > 广东省</option>
-                    <option > 湖北省 </option>
-                    <option >深圳市</option>
-                    <option >深圳市 </option>
-                    <option >深圳市</option>
+                    <option> 广东省</option>
                 </select>
               </td>
             <td class="one">
@@ -43,15 +40,15 @@
     		</tr>
     		<tr>
     			<td class="td_left">详细地址</td>
-          <td class="td_input"><input type="text" v-model="address" placeholder="输入学校地址" value=""/></td>
+          <td class="td_input"><input type="text" name="address" placeholder="输入学校地址" value="深圳市南山区科兴科学园"/></td>
     		</tr>
     		<tr>
     			<td class="td_left">校区电话</td>
-          <td class="td_input"><input type="text"  v-model="tel" placeholder="输入电话" value=""/></td>
+          <td class="td_input"><input type="tel" name="tel" placeholder="输入电话" value="0755123456"/></td>
     		</tr>
     		<tr>
     			<td class="td_left">校区照片</td>
-          <td class="td_input"><input type="file" class="special" id="filer_input" multiple="multiple"/></td>
+          <td class="td_input"><input type="file" name="files[]" class="special" id="filer_input" multiple="multiple"/></td>
     		</tr>
     	</table>
     	<div class="picture">
@@ -61,65 +58,22 @@
     		</ul>
     	</div>
     </div>
-    <div class="send"><a href="" v-on:click="checkData()">提交</a></div>
-</div>	
+    <input type="hidden" name="school_pid" placeholder="输入总校ID" value="2"/>
+    <input type="hidden" name="cityid" placeholder="输入城市编码" v-model="cityid"/>
+    <div class="send"><input type="submit" class="submit" value="提交"/></div>
+</div>
+</form>
 </template>
 
 <script>
-import $ from 'jquery'
-// import axios from 'axios'
 export default {
   name: '',
   data () {
     return {
-      name: '',
-      tel: '',
-      cityid: '',
-      address: '',
-      school_pid: 0,
-      files: []
+      cityid: '123'
     }
   },
-  method: {
-    submits: function () {
-      $.ajax({
-        url: 'http://hxb.scpoo.com/hxb/index.php/index/branchschool/branchschool_add?school_pid=' + this.$route.query.school_pid,
-        data: {
-          name: this.name,
-          tel: this.tel,
-          cityid: this.cityid,
-          address: this.address,
-          school_pid: this.school_pid,
-          files: this.files
-        },
-        dataType: 'jsonp',
-        success: function (rs) {
-          if (rs.ret === 0) {
-            alert('提交成功')
-          } else {
-            alert(rs.msg)
-          }
-        },
-        error: function (rs) {
-          alert('网络错误')
-        }
-      })
-    },
-    checkData: function () {
-      if (this.name === '') {
-        alert('请填写姓名')
-      } else if (this.tel === '') {
-        alert('请填写电话')
-      } else if (this.cityid === '') {
-        alert('城市编码')
-      } else if (this.address === '') {
-        alert('输入学校地址')
-      } else {
-        this.submits()
-      }
-    },
-    getCity: function () {}
-  }
+  methods: {}
 }
 </script>
 
@@ -236,7 +190,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 	background-size: 0.741rem;float: right;margin-right: 0.611rem;margin-top: 0.37rem;
    }
 
-#ap_sch .send a{display: block;width: 9.111rem;
+#ap_sch .send .submit{display: block;width: 9.111rem;
 	height: 1.889rem;
 	background-color: #2c618b!important;
 	border-radius: 0.093rem;
