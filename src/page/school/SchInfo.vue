@@ -1,7 +1,8 @@
 <template>
+<HeaderNav :classify=0  :searchIcon=0>
 <div class="font_wryh">
      <div class="school_set">
-       <div class="empty_box"></div>
+      <!--  <div class="empty_box"></div> -->
         <div class="school_title">
             <ul>
                 <li><a href="#/SchInfo" class="act">学校信息</a></li>
@@ -48,7 +49,7 @@
                 </div>
             </div>
         </div>
-        <div class="line_bot"></div>
+    <!--     <div class="line_bot"></div> -->
         <div class="school_area">
             <h3><span>|</span>&nbsp;&nbsp;学校校区</h3>
             <div class="add"><a  v-bind:href="'#/AddSch?school_pid='+info.branch_school[0].school_pid">添加校区</a></div>
@@ -74,10 +75,11 @@
         <div class="button button_two"><a href="">保存</a></div>
     </div>
 </div>
-    
+</HeaderNav>    
 </template>
 
 <script>
+  import HeaderNav from '../../components/HeaderNav.vue'
   import axios from 'axios'
   import $ from 'jquery'
   export default {
@@ -121,6 +123,9 @@
       }).catch((err) => {
         console.log(err)
       })
+    },
+    components: {
+      HeaderNav
     }
   }
 </script>
@@ -131,6 +136,7 @@ body,div,p,ul,li,a,dl,dt,dd,img,ol,input,table,tr,td,textarea,h1,h2,h3,h4,h5,h6,
   margin: 0;
   padding: 0;
   outline: none;
+  background-color: #fff;
 }
 address, caption, cite, code, dfn, em, th, var, i, samp {
   font-style:normal;
@@ -144,7 +150,7 @@ q:before, q:after {
   content:'';
 }
 body,button,input,select,textarea {
-  font:12px/1.5 'Microsoft YaHei', Helvetica, Tahoma, Arial, \5FAE\8F6F\96C5\9ED1, sans-serif;
+/*  font:12px/1.5 'Microsoft YaHei', Helvetica, Tahoma, Arial, \5FAE\8F6F\96C5\9ED1, sans-serif;*/
   *line-height: 1.5;
   -ms-overflow-style: scrollbar;  
   color:#333;
@@ -235,7 +241,7 @@ ul li a {
   background-color: #eeeeee;
 }
 .name_infor {
-  /*height: 4.22222222rem;*/
+  height: 3.22222222rem;
 }
 .name_infor .pict_head{margin: 0 auto;text-align: center;}
 .name_infor .pict_head img{
@@ -542,5 +548,5 @@ ul li a {
 .safe_set {
   margin: 0 0.37037037rem;
 }
-.school_intro textarea{font-size: 0.359rem;}
+.school_intro textarea{font-size: 0.379rem;}
 </style>

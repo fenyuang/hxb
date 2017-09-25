@@ -1,4 +1,5 @@
 <template>
+<HeaderNav :classify=0  :searchIcon=0>
   <div class="order" id="role_order">
 	  	<div class="order_spe">
 	  		<table>
@@ -22,14 +23,17 @@
 	  	<div class="order_spe">
 	  	     <table>
 	  			<tr>
-	  				<td class="td_left">操作</td><td class="td_right active">修改 ></td><td class="td_right active">删除 ></td>
+	  				<td class="td_left">操作</td> <a href="#/EditRole"><td  @tap="editlerf()" class="td_right active">修改 ></td></a>
+            <td  @tap="delteam()" class="td_right active">删除 ></td>
 	  			</tr>
 	  		</table>
 	  	</div>
 </div>
+</HeaderNav>
 </template>
 
 <script>
+import HeaderNav from '../../components/HeaderNav.vue'
 import axios from 'axios'
 export default {
   data () {
@@ -39,6 +43,22 @@ export default {
     }
   },
   methods: {
+    delteam () {
+      axios.post('http://hxb.scpoo.com/hxb/index.php/index/Power/getRoledel', {id: this.$route.query.id}).then((res) => {
+        if (res.status === 200) {
+          if (res.data.ret === 100) {
+            this.$router.push('/SchRule')
+          } else {
+            alert(res.data.msg)
+          }
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+    editlerf () {
+      this.$router.push('/EditRole?id=' + this.$route.query.id)
+    },
     getInfo () {
       axios.post('http://hxb.scpoo.com/hxb/index.php/index/Power/getRoleinfo', {id: this.$route.query.id}).then((res) => {
         if (res.status === 200) {
@@ -55,6 +75,9 @@ export default {
   },
   mounted () {
     this.getInfo()
+  },
+  components: {
+    HeaderNav
   }
 }
 </script>

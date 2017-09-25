@@ -1,7 +1,8 @@
 <template>
+<HeaderNav :classify=0  :searchIcon=0>
 <div class="font_wryh">
    <div class="school_set">
-        <div class="empty_box"></div>
+<!--         <div class="empty_box"></div> -->
         <div class="school_title">
             <ul>
                 <li><a href="#/SchInfo">学校信息</a></li>
@@ -16,7 +17,7 @@
         <div class="j_power">
             <ul class="mid_title">
               <li v-for="(value,index) in tabsName">
-                  <a  class="tab-link" v-on:click="tabsSwitch(index)" v-bind:class="index==curIndex&&'act'">{{value}}</a> 
+                  <a  class="tab-link" v-on:click="tabsSwitch(index)" v-bind:class="index==curIndex&&'active'">{{value}}</a> 
               </li>
 
        <!--          <li><a href="" class="act">角色管理</a></li>
@@ -65,9 +66,11 @@
       
     </div>
 </div>
+</HeaderNav>
 </template>
 
 <script>
+import HeaderNav from '../../components/HeaderNav.vue'
 import axios from 'axios'
 export default {
   name: '',
@@ -113,6 +116,9 @@ export default {
   mounted () {
     this.getRolelist()
     this.getTeamlist()
+  },
+  components: {
+    HeaderNav
   }
 }
 </script>
@@ -122,6 +128,7 @@ export default {
 
 
 @charset "utf-8";
+
 body,div,p,ul,li,a,dl,dt,dd,img,ol,input,table,tr,td,textarea,h1,h2,h3,h4,h5,h6,select {
   margin: 0;
   padding: 0;
@@ -222,6 +229,7 @@ ul li a {
   color: #2c618b!important;
   border-bottom: 1px solid #2c618b;
 }
+.active{ color: #2c618b!important;}
 .mid_title {
   margin: 0 1.7962963rem;
 }
@@ -299,7 +307,7 @@ ul li a {
   color: #333333;
   font-size: 0.48148148rem;
 }
-.school_area h3 {
+/*.school_area h3 {
   color: #333333;
   font-size: 0.55555556rem;
   height: 1.87037037rem;
@@ -340,7 +348,7 @@ ul li a {
   width: 33%;
   text-align: right;
   white-space: nowrap;
-}
+}*/
 .box_one {
   margin: 0.55555556rem auto;
   width: 100%;
@@ -358,7 +366,7 @@ ul li a {
   font-size: 0.59259259rem;
   margin-bottom: 0.92592593rem;
 }
-.school_area {
+/*.school_area {
   position: relative;
 }
 .school_area .add {
@@ -375,7 +383,7 @@ ul li a {
   display: block;
   color: #93c971;
   font-size: 0.55555556rem;
-}
+}*/
 /*
 域名设置*/
 .name_set {
@@ -433,6 +441,8 @@ ul li a {
   margin: 0 0.37037037rem;
 }
 .tab2 span {
+  height: 0.8rem;
+  line-height: 0.8rem;
   display: inline-block;
   font-size: 0.51851852rem;
   color: #999999;
@@ -535,6 +545,7 @@ ul li a {
 .safe_set {
   margin: 0 0.37037037rem;
 }
+/*.font_wryh{position: relative;}*/
 
  .add {
   height: 1.48rem;
@@ -544,6 +555,7 @@ ul li a {
   background-size: 1.48rem;
   position: absolute;
   bottom: 2.22rem;
+  top: 22rem;
    right: 0.185rem;
 }
  .add a {

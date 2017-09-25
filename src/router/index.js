@@ -49,6 +49,9 @@ import ChangePhoneNo from '@/page/school/ChangePhoneNo.vue'
 import RoleInfo from '@/page/school/RoleInfo.vue'
 import TeamInfo from '@/page/school/TeamInfo.vue'
 import AddPeople from '@/page/school/AddPeople.vue'
+import EditTeam from '@/page/school/EditTeam.vue'
+import EditRole from '@/page/school/EditRole.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -255,6 +258,14 @@ export default new Router({
     {
       path: '/AddPeople',
       component: AddPeople
+    },
+    {
+      path: '/EditTeam',
+      component: EditTeam
+    },
+    {
+      path: '/EditRole',
+      component: EditRole
     }
   ]
 })

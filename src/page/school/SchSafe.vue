@@ -1,7 +1,8 @@
 <template>
+<HeaderNav :classify=0  :searchIcon=0>
 	<div class="font_wryh">
 		<div class="school_set">
-		     <div class="empty_box"></div>
+		    <!--  <div class="empty_box"></div> -->
 		     <div class="school_title">
 		         <ul>
 		             <li><a href="#/SchInfo">学校信息</a></li>
@@ -56,9 +57,11 @@
             </div>  
         </div>
     </div>
+</HeaderNav>
 </template>
 
 <script>
+  import HeaderNav from '../../components/HeaderNav.vue'
   import axios from 'axios'
   import $ from 'jquery'
   export default {
@@ -125,6 +128,9 @@
       }).catch((err) => {
         console.log(err)
       })
+    },
+    components: {
+      HeaderNav
     }
   }
 </script>

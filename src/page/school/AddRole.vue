@@ -1,4 +1,5 @@
 <template>
+<HeaderNav :classify=0  :searchIcon=0>
   <div class="add_school" id="ad_r">
 	<div class="add_head"><a href="#/AddRole">新增角色</a></div>
     <div class="add_content">
@@ -21,13 +22,15 @@
     			</td>
     		</tr>
     	</table>
-    	{{role_id}}
+   <!--  	{{role_id}} -->
     </div>
     <div class="send"><a v-on:click="subadd">提交</a></div>
-</div>	
+</div>
+</HeaderNav>	
 </template>
 
 <script>
+import HeaderNav from '../../components/HeaderNav.vue'
 import axios from 'axios'
 import $ from 'jquery'
 export default {
@@ -87,6 +90,9 @@ export default {
   },
   mounted: function () {
     this.getRolelist()
+  },
+  components: {
+    HeaderNav
   }
 }
 </script>

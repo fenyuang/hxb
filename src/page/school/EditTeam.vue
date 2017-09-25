@@ -1,37 +1,33 @@
 <template>
 <HeaderNav :classify=0  :searchIcon=0>
   <div class="add_school" id="add_people">
-	<div class="add_head"><a href="">新增人员</a></div>
+	<div class="add_head"><a href="">修改人员</a></div>
     <div class="add_content">
     	<table>
     		<tr>
     			<td class="td_left">姓名</td>
-    			<td><input type="text" name="" id="quan_name"  placeholder="(请输名称,输入后不可修改)" value=""></td>
+    			<td><input type="text" name="" id="quan_name"  placeholder="(请输名称,输入后不可修改)" :value="info.name"></td>
     		</tr>
             <tr>
                 <td class="td_left">手机号码</td>
-                <td><input type="text" name="" id="quan_tel"  placeholder="(请输名称,输入后不可修改)" value=""></td>
+                <td><input type="text" name="" id="quan_tel"  placeholder="(请输名称,输入后不可修改)" :value="info.tel"></td>
             </tr>
             <tr>
                 <td class="td_left">QQ号码</td>
-                <td><input type="text" name="" id="quan_qq"  placeholder="(请输名称,输入后不可修改)" value=""></td>
-            </tr>
-            <tr>
-                <td class="td_left">设置密码</td>
-                <td><input type="password" name=""  id="quan_password"  placeholder="(请输名称,输入后不可修改)" value=""></td>
+                <td><input type="text" name="" id="quan_qq"  placeholder="(请输名称,输入后不可修改)" :value="info.qq"></td>
             </tr>
     		<tr>
     			<td class="td_left" style="color: #2c618b;">角色确认</td>
     			<td>
     			    <select id="quan_role_id">
-	    				<option :value="list.id" v-for="list in rolelsit">{{list.name}}</option>
+	    				<option :value="list.id" :selected="list.id===info.role_id" v-for="list in rolelsit">{{list.name}}</option>
     			    </select>
     			</td>
     		</tr>
     	</table>
     	
     </div>
-    <div class="send"><a @click="subadd">提交</a></div>
+    <div class="send"><a @tap="subadd">提交</a></div>
 </div>
 </HeaderNav>
 </template>
@@ -45,7 +41,8 @@ export default {
     return {
       tabsName: ['角色管理', '团队管理'],
       curIndex: 0,
-      rolelsit: []
+      rolelsit: [],
+      info: []
     }
   },
   methods: {
@@ -75,7 +72,7 @@ export default {
         alert('填写 密码')
         return false
       }
-      this.datas = {name: name, tel: tel, qq: qq, password: password, role_id: roleid}
+      this.datas = {name: name, tel: tel, qq: qq, id: this.$route.query.id, role_id: roleid}
       this.getAddrole(this.datas)
     },
     getRolelist () {
@@ -92,10 +89,23 @@ export default {
       })
     },
     getAddrole (datas) {
-      axios.post('http://hxb.scpoo.com/hxb/index.php/index/Power/getTeamadd', datas).then((res) => {
+      axios.post('http://hxb.scpoo.com/hxb/index.php/index/Power/getTeamedit', datas).then((res) => {
         if (res.status === 200) {
           if (res.data.ret === 100) {
             alert(res.data.msg)
+          } else {
+            console.log(res.data.msg)
+          }
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+    getInfo () {
+      axios.post('http://hxb.scpoo.com/hxb/index.php/index/Power/getTeaminfo', {id: this.$route.query.id}).then((res) => {
+        if (res.status === 200) {
+          if (res.data.ret === 100) {
+            this.info = res.data.data
           } else {
             console.log(res.data.msg)
           }
@@ -107,6 +117,7 @@ export default {
   },
   mounted () {
     this.getRolelist()
+    this.getInfo()
   },
   components: {
     HeaderNav
@@ -225,7 +236,5 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
     line-height: 1.889rem;
     margin:0.926rem auto;
 }
-input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
-   -webkit-box-shadow: 0 0 0px 1000px white inset !important;
-  }
+
 </style>

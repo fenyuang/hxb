@@ -1,4 +1,5 @@
 <template>
+<HeaderNav :classify=0  :searchIcon=0>
 <form action="http://hxb.scpoo.com/hxb/index.php/index/branchschool/branchschool_add" method="post" enctype="multipart/form-data">
  <div class="add_school" id="ap_sch">
 	<div class="add_head">添加校区</div>
@@ -63,9 +64,11 @@
     <div class="send"><input type="submit" class="submit" value="提交"/></div>
 </div>
 </form>
+</HeaderNav>
 </template>
 
 <script>
+import HeaderNav from '../../components/HeaderNav.vue'
 export default {
   name: '',
   data () {
@@ -73,7 +76,10 @@ export default {
       cityid: '123'
     }
   },
-  methods: {}
+  methods: {},
+  components: {
+    HeaderNav
+  }
 }
 </script>
 

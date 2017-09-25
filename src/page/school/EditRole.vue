@@ -1,40 +1,34 @@
 <template>
 <HeaderNav :classify=0  :searchIcon=0>
-  <div class="add_school" id="add_people">
-	<div class="add_head"><a href="">新增人员</a></div>
+  <div class="add_school" id="ad_r">
+	<div class="add_head"><a href="#/AddRole">修改角色</a></div>
     <div class="add_content">
     	<table>
     		<tr>
-    			<td class="td_left">姓名</td>
-    			<td><input type="text" name="" id="quan_name"  placeholder="(请输名称,输入后不可修改)" value=""></td>
+    			<td class="td_left">角色名称</td>
+    			<td><input type="text" name="name" class="inputText" id="quan_name" placeholder="(请输名称,输入后不可修改)" :value="roleinfo.name"></td>
     		</tr>
             <tr>
-                <td class="td_left">手机号码</td>
-                <td><input type="text" name="" id="quan_tel"  placeholder="(请输名称,输入后不可修改)" value=""></td>
-            </tr>
-            <tr>
-                <td class="td_left">QQ号码</td>
-                <td><input type="text" name="" id="quan_qq"  placeholder="(请输名称,输入后不可修改)" value=""></td>
-            </tr>
-            <tr>
-                <td class="td_left">设置密码</td>
-                <td><input type="password" name=""  id="quan_password"  placeholder="(请输名称,输入后不可修改)" value=""></td>
+                <td class="td_left">备注名称</td>
+                <td><input type="text" name="beizhu" class="inputText" id="quan_beizhu"  placeholder="(请输名称,输入后不可修改)" :value="roleinfo.description"></td>
             </tr>
     		<tr>
-    			<td class="td_left" style="color: #2c618b;">角色确认</td>
+    			<td class="td_left" style="color: #2c618b;">角色权限</td>
     			<td>
-    			    <select id="quan_role_id">
-	    				<option :value="list.id" v-for="list in rolelsit">{{list.name}}</option>
-    			    </select>
+    			   <!--  <select>
+	    				 <option :value="list.id" v-for="list in rolelsit">{{list.description}}</option>
+    			    </select> -->
+             <span class="right" v-for="(list,index) in rolelist">{{list.description}}<input type="checkbox" v-bind:value="index+1+''" v-model="role_id"></span>
     			</td>
     		</tr>
     	</table>
-    	
+<!--     	      {{role_id}} -->
     </div>
-    <div class="send"><a @click="subadd">提交</a></div>
+    <div class="send"><a @tap="subadd">提交</a></div>
 </div>
-</HeaderNav>
+</HeaderNav>	
 </template>
+
 <script>
 import HeaderNav from '../../components/HeaderNav.vue'
 import axios from 'axios'
@@ -45,7 +39,9 @@ export default {
     return {
       tabsName: ['角色管理', '团队管理'],
       curIndex: 0,
-      rolelsit: []
+      rolelist: [],
+      roleinfo: [],
+      role_id: []
     }
   },
   methods: {
@@ -54,35 +50,23 @@ export default {
     },
     subadd () {
       var name = $('#quan_name').val()
-      var tel = $('#quan_tel').val()
-      var qq = $('#quan_qq').val()
-      var password = $('#quan_password').val()
-      var roleid = $('#quan_role_id').val()
-
+      var beizhu = $('#quan_beizhu').val()
       if (name === '') {
         alert('填写名字')
         return false
       }
-      if (tel === '') {
-        alert('填写手机号码')
+      if (beizhu === '') {
+        alert('填写备注')
         return false
       }
-      if (qq === '') {
-        alert('填写QQ')
-        return false
-      }
-      if (password === '') {
-        alert('填写 密码')
-        return false
-      }
-      this.datas = {name: name, tel: tel, qq: qq, password: password, role_id: roleid}
+      this.datas = {name: name, description: beizhu, id: this.$route.query.id, role_id: this.role_id}
       this.getAddrole(this.datas)
     },
     getRolelist () {
-      axios.post('http://hxb.scpoo.com/hxb/index.php/index/Power/getRolelist').then((res) => {
+      axios.post('http://hxb.scpoo.com/hxb/index.php/index/Power/getInterfacelsit').then((res) => {
         if (res.status === 200) {
           if (res.data.ret === 100) {
-            this.rolelsit = res.data.data
+            this.rolelist = res.data.data
           } else {
             console.log(res.data.msg)
           }
@@ -92,10 +76,23 @@ export default {
       })
     },
     getAddrole (datas) {
-      axios.post('http://hxb.scpoo.com/hxb/index.php/index/Power/getTeamadd', datas).then((res) => {
+      axios.post('http://hxb.scpoo.com/hxb/index.php/index/Power/getRoleedit', datas).then((res) => {
         if (res.status === 200) {
           if (res.data.ret === 100) {
             alert(res.data.msg)
+          } else {
+            console.log(res.data.msg)
+          }
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+    getRoleinfo () {
+      axios.post('http://hxb.scpoo.com/hxb/index.php/index/Power/getRoleinfo', {id: this.$route.query.id}).then((res) => {
+        if (res.status === 200) {
+          if (res.data.ret === 100) {
+            this.roleinfo = res.data.data
           } else {
             console.log(res.data.msg)
           }
@@ -107,6 +104,7 @@ export default {
   },
   mounted () {
     this.getRolelist()
+    this.getRoleinfo()
   },
   components: {
     HeaderNav
@@ -116,11 +114,11 @@ export default {
 
 <style scoped>
 
-@charset "utf-8";
-body,div,p,ul,li,a,dl,dt,dd,img,ol,input,table,tr,td,textarea,h1,h2,h3,h4,h5,h6,select {
+  body,div,p,ul,li,a,dl,dt,dd,img,ol,input,table,tr,td,textarea,h1,h2,h3,h4,h5,h6,select {
   margin: 0;
   padding: 0;
   outline: none;
+  text-decoration: none;
 }
 address, caption, cite, code, dfn, em, th, var, i, samp {
   font-style:normal;
@@ -185,9 +183,9 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 }
 
 *{font-family: "Microsoft YaHei" !important;}
-#add_people{background-color: #eeeeee;}
-#add_people .add_head{padding: 0.37rem}
-#add_people .add_head a{font-size: 0.556rem;
+#ad_r .add_school{background-color: #eeeeee;}
+#ad_r .add_head{padding: 0.37rem}
+#ad_r .add_head a{font-size: 0.556rem;
 	display: block;
 	color: #333;
 	text-align: center;
@@ -199,16 +197,21 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 	margin: 0 auto;
 	border-radius: 0.093rem;
 }
-#add_people .add_content{margin: 0 auto;background-color: #fff;margin-left: 0.37rem;margin-right: 0.37rem}
-#add_people .add_content table{width: 100%;}
-#add_people .add_content tr{height: 1.667rem;border-bottom:1px solid #eee; font-size: 0.444rem;color: #999;}
-#add_people .add_content tr td{padding-left: 0.5rem;}
-#add_people .td_left{width: 25%;}
+#ad_r .add_content{margin: 0 auto;background-color: #fff;margin-left: 0.37rem;margin-right: 0.37rem}
+#ad_r .add_content table{width: 100%;}
+#ad_r .add_content tr{height: 1.667rem;border-bottom:1px solid #eee; font-size: 0.444rem;color: #999;}
+#ad_r .add_content tr td{padding-left: 0.5rem;}
+#ad_r .td_left{width: 25%;}
 
-#add_people .add_content input{width: 100%;font-size: 0.444rem;color: #999999;text-align: center;}
-#add_people .add_content select{height: 1.667rem;font-size: 0.444rem;color: #999999;border: none;text-align: center;width: 100%;padding-left: 0.5rem;}
+/*#ad_r .add_content input{width: 100%;font-size: 0.444rem;color: #999999;text-align: center;}*/
+#ad_r .add_content .right{
+  margin-right:0.2rem;
+}
 
-#add_people .add_content .special{color: #2c618b;
+#ad_r .add_content .inputText{width: 100%;font-size: 0.444rem;color: #999999;text-align: center;}
+#ad_r .add_content select{height: 1.667rem;font-size: 0.444rem;color: #999999;border: none;text-align: center;width: 100%;padding-left: 0.5rem;}
+
+#ad_r .add_content .special{color: #2c618b;
 	width: 2.222rem;
 	height: 0.889rem;
 	border: 1px solid #2c618b;
@@ -216,16 +219,15 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 	float:right;
 	margin-right:0.481rem;}
 
-#add_people .send a{display: block;width: 9.37rem;
+#ad_r .send a{display: block;width: 9.37rem;
 	height: 1.889rem;
 	background-color: #2c618b;
 	border-radius: 0.093rem;
 	text-align: center;color: #fff;
 	font-size: 0.593rem;
-    line-height: 1.889rem;
-    margin:0.926rem auto;
+line-height: 1.889rem;
+margin:0.926rem auto;
 }
-input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
-   -webkit-box-shadow: 0 0 0px 1000px white inset !important;
-  }
+
+
 </style>
