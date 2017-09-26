@@ -7,7 +7,7 @@
 		    <div class="wrap">
 		    	<div class="input_place"><input type="text" name="" placeholder="请输入当前绑定的手机号码"></div>
 		   	    <div class="input_place"><input type="text" name="" placeholder="请输入右侧的验证码"><span class="span_one"></span></div>
-		   	    <div class="input_place"><input type="text" name="" placeholder="请输入手机号码"><span class="span_two">获取验证码</span></div>
+		   	 <!--    <div class="input_place"><input type="text" name="" placeholder="请输入手机号码"><span class="span_two">获取验证码</span></div> -->
 	       </div>
 
 	       <div class="wrap wrap_two">

@@ -64,7 +64,7 @@
         <div class="button"><a href="javascript:;" @click="school_save">保存</a></div>
     </div>
     <!--   	域名设置 -->
-    <div class="name_set" style="display: none;">
+  <!--   <div class="name_set" style="display: none;">
         <div class="second_name">学校二级域名</div>
         <div class="write">
             <input type="text" name="" placeholder="4~20字符，数字/字母组合">
@@ -73,11 +73,10 @@
         <p>如果您已有网址，如www.huixuebao.com ，您也可以将您已备案的域名解析到您的二级域名，使用独立域名。</p>
         <p><a href="" class="look">查看解析攻略</a></p>
         <div class="button button_two"><a href="">保存</a></div>
-    </div>
+    </div> -->
 </div>
 </HeaderNav>    
 </template>
-
 <script>
   import HeaderNav from '../../components/HeaderNav.vue'
   import axios from 'axios'

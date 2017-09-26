@@ -6,49 +6,49 @@
 
 <script>
 export default {
-  name: '',
-  data: function (){
-  	return{
+	data: function(){
+		return {
+			students: []
+		}
+	},
+	mounted: function() {
+		this.getDate()
+	},
+	methods: {
+		getDate: function(){
+			_this = this
+			axios.get('http://hxb.scpoo.com/hxb/index.php/index/user/user_list').then(function(rs){
+				rs.data=rs
+				if(rs.ret===100){
+					rs.data=_this.students
 
-  	}
-  },
-  data: function(){
-  	return{
-  		students: []
-  	}
-  },
-  data: function(){
-  	return{
-  		students: []
-  	}
-  },
-  data: function(){
-  	return{
+				}else{
 
-  	}
-  },
-  mounted: function(){
-  	this.getDate()
-  },
-  methods:{
-  	getDate: function(){
-  		var _this=this
-  		aixos.get('http://hxb.scpoo.com/hxb/index.php/index/user/user_list').then(function(rs){
-  			rs=rs.date
-  			if(rs.ret==100){
-  				_this.students=rs.date
+				}
+			}).catch(function(error){
+				console.log(error)
 
-  			}
-  			else{
+			})
+		},
+		getSearch: function(){
+			_this=this
+			axios.get('http://hxb.scpoo.com/hxb/index.php/index/user/user_list?realnameandtel='+_this.message).then(function(rs){
+				rs.data=rs
+				if(rs.data===100){
+					_this.students=rs.data
 
-  			}
+				}
+				else{
 
-  		}).catch(function(error){
-  			console.log(error)
+				}
 
-  		})
-  	}
-  }
+			}).catch(function(error){
+				console.log(error)
+			})
+		}
+	}
+
+
  
 }
 </script>

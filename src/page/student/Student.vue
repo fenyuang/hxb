@@ -43,10 +43,6 @@ export default {
       console.log(this)
       axios.get('http://hxb.scpoo.com/hxb/index.php/index/user/user_list')
       .then(function (rs) {
-        console.log(this)  // 返回的是 undefined 已经被覆盖
-        console.log(_this)  // 返回的是Vue 整个组件
-        console.log(rs) // rs 返回的是包括整个网络请求的状态
-        console.log(rs.data) // 这个是请求的需要的状态
         rs = rs.data
         console.log(rs.ret === 100)
         if (rs.ret === 100) {
