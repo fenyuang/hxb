@@ -8,7 +8,7 @@
     <form name="newCurr">
       <div class="add_clue_form">
         <div class="form_name">
-         <input name="name" type="text" placeholder="课程名称" :value="info.name"/>
+         <input name="name" type="text" placeholder="课程名称" v-model="info.name"/>
         </div>
         <div class="form_name">
           <select name="parent_category" :value = "parent_category" @change="chose_category">
@@ -18,21 +18,21 @@
           <span class="triangle"></span>
         </div>
         <div class="form_name">
-          <select name="category" :value = "category">
+          <select name="category" v-model="category"> <!--:value = "category"-->
             <option value="">请选择</option>
             <option :value="list['id']" v-for="list in category_ist">{{list['name']}}</option>
           </select>
           <span class="triangle"></span>
         </div>
         <div class="form_name">
-          <input name="price" type="text" :value="info['price']" placeholder="课程价格（若免费，请写0）"/>
+          <input name="price" type="text" v-model="info['price']" placeholder="课程价格（若免费，请写0）"/>
         </div>
         <div class="form_name">
-          <input name="class_hour" type="text" :value="info['class_hour']" placeholder="学习课时" />节
+          <input name="class_hour" type="text" v-model="info['class_hour']" placeholder="学习课时" />节
         </div>
         <div class="form_name">
-          <input name="cycle_value" type="text" :value="info['cycle_value']" placeholder="学习周期" style="width:46%;" />
-          <select name="cycle_unit" style="width:46%;"  :value = "cycle_unit" >
+          <input name="cycle_value" type="text" v-model="info['cycle_value']" placeholder="学习周期" style="width:46%;" />
+          <select name="cycle_unit" style="width:46%;" :value = "cycle_unit" >
             <option value="日">日</option>
             <option value="周">周</option>
             <option value="月">月</option>
@@ -42,17 +42,20 @@
         </div>
       </div>
 
-      <textarea class="characteristic" name="detail" :value="info['detail']" placeholder="课程特色（请填写50字内课程特色，吸引更多学生）"></textarea>
+      <textarea class="characteristic" name="detail" v-model="info['feature']" placeholder="课程特色（请填写50字内课程特色，吸引更多学生）"></textarea>
 
       <div class="form_name serve">
-        <input name="feature" type="text" :value="info['feature']" placeholder="特色服务（可写多项）"/>
+        <input name="feature" class="ser" type="text" v-model="info['feature_service']" placeholder="特色服务（可写多项）"/>
+        <input type="button" class="add" value="添加一项" @tap="addServer"/>
       </div>
-
+      <div class="form_name serve" style="margin-top: 0;">
+        <input type="button" :value="list"  v-for="(list, index) in features" style="background-color: #2c618b;color: #fff;" @tap="deleServers(index)"/>
+      </div>
       <div class="main_figure ">
           <h5 >课程主图</h5>
 
         <div style="width: 78px;height: 60px;position: relative;display: inline-block;margin-right: 10px;" v-for="(list, index) in MainImg">
-          <img :src = 'list.url' style="width: 78px;height: 60px;" />
+          <img :src = 'list.path' style="width: 78px;height: 60px;" />
           <span style=" position: absolute;left: 0;bottom:0; width: 78px;height: 26px;background-color: rgba(0,0,0,0.5);">
               <img src="../../../static/images/deletege.png" style=" width: 18px;height: 24px;float: right" @click.self='removePic($event.target, index)'/>
            </span>
@@ -60,7 +63,7 @@
 
         <div class="mainPic">
           <img  src="../../../static/images/addPic.png"/>
-          <input type="file" @change.stop="fil" name="pic" style="position: absolute;top:15px;left: 1px;opacity: 0;z-index: 5;width: 1.8rem;" multiple="multiple"/>
+          <input type="file" @change.stop="fil" name="pic" accept="image/*" style="position: absolute;top:15px;left: 1px;opacity: 0;z-index: 5;width: 1.8rem;" multiple="multiple"/>
         </div>
       </div>
 
@@ -68,7 +71,7 @@
         <h5>课程图文介绍</h5>
 
         <div style="width: 78px;height: 60px;position: relative;display: inline-block;margin-right: 10px;" v-for="(list, index) in TextImg">
-          <img :src = 'list.url' style="width: 78px;height: 60px;" />
+          <img :src = 'list.path' style="width: 78px;height: 60px;" />
           <span style=" position: absolute;left: 0;bottom:0; width: 78px;height: 26px;background-color: rgba(0,0,0,0.5);">
               <img src="../../../static/images/deletege.png" style=" width: 18px;height: 24px;float: right" @click.self='removePic($event.target, index)'/>
            </span>
@@ -76,7 +79,7 @@
 
         <div class="mainPic TextImg">
           <img  src="../../../static/images/addPic.png"/>
-          <input type="file" @change.stop="fil" name="pic" style="position: absolute;top:15px;left: 1px;opacity: 0;z-index: 5;width: 1.8rem;"   multiple="multiple" />
+          <input type="file" @change.stop="fil" name="pic" accept="image/*" style="position: absolute;top:15px;left: 1px;opacity: 0;z-index: 5;width: 1.8rem;"   multiple="multiple" />
         </div>
       </div>
 
@@ -96,7 +99,7 @@
     data () {
       return {
         id: this.$route.query.id,
-        info: [],
+        info: {},
         parent_category_ist: [],
         category_ist: [],
         condition: {},
@@ -105,15 +108,27 @@
         parent_category: '',
         category: '',
         title: '新增课程',
+        features: [],
         MainImg: [],
-        TextImg: []
+        MainHttp: [],
+        TextImg: [],
+        TextHttp: []
       }
     },
     methods: {
+      addServer () {
+        let featu = $('input[name="feature"]').val()
+        if (featu) {
+          this.features.push(featu)
+          this.info.feature = ''
+        }
+      },
+      deleServers (index) {
+        this.features.splice(index, 1)
+      },
       fil (ev) {
         if (ev.target.files.length !== 0) {
           let file = ev.target.files
-          console.log(ev.target.files)
           for (let i = 0; i < file.length; i++) {
             let type = file[i].type.split('/')[0]
             if (type !== 'image') {
@@ -130,10 +145,39 @@
             let self = this
             reader.onloadend = function (e) {
               let dataUrl = reader.result
-              let obj = {url: dataUrl}
+              let obj = {path: dataUrl}
+              let images = []
+              images.push(dataUrl)
+//              判断是课程主图还是课程图文介绍
               if ($(ev.target).parents('.mainPic').attr('class').indexOf('TextImg') === -1) {
+                axios.post('http://hxb.scpoo.com/hxb/index.php/index/common/upload_image', {image: images}).then((res) => {
+                  if (res.status === 200) {
+                    if (res.data.ret === 100) {
+                      let urlString = res.data.data.join()
+                      self.MainHttp.push(urlString)
+                    } else {
+                      confirm(res.data.msg)
+                    }
+                  }
+                }).catch((err) => {
+                  console.log(err)
+                  return false
+                })
                 self.MainImg.push(obj)
               } else {
+                axios.post('http://hxb.scpoo.com/hxb/index.php/index/common/upload_image', {image: images}).then((res) => {
+                  if (res.status === 200) {
+                    if (res.data.ret === 100) {
+                      let urlString = res.data.data.join()
+                      self.TextHttp.push(urlString)
+                    } else {
+                      confirm(res.data.msg)
+                    }
+                  }
+                }).catch((err) => {
+                  console.log(err)
+                  return false
+                })
                 self.TextImg.push(obj)
               }
             }
@@ -145,9 +189,11 @@
       removePic (target, index) {
         if ($(target).parents('.main_figure').children('.mainPic').attr('class').indexOf('TextImg') === -1) {
           this.MainImg.splice(index, 1)
+          this.MainHttp.splice(index, 1)
           return false
         } else {
           this.TextImg.splice(index, 1)
+          this.TextHttp.splice(index, 1)
           return false
         }
       },
@@ -160,13 +206,12 @@
         var classHour = $('input[name="class_hour"]').val()
         var cycleValue = $('input[name="cycle_value"]').val()
         var cycleUnit = $('select[name="cycle_unit"]').val()
-        var detail = $('textarea[name="detail"]').val()
-        var feature = $('input[name="feature"]').val()
+        var feature = $('textarea[name="detail"]').val()
         if (this.id) {
-          this.condition = {id: this.id, name: name, parent_category: parentCategory, category: category, price: price, class_hour: classHour, cycle_value: cycleValue, cycle_unit: cycleUnit, detail: detail, feature: feature}
+          this.condition = {id: this.id, name: name, parent_category: parentCategory, category: category, price: price, class_hour: classHour, cycle_value: cycleValue, cycle_unit: cycleUnit, feature: feature, feature_service: this.features, image: this.MainHttp, detail: this.TextHttp}
           this.url = 'http://hxb.scpoo.com/hxb/index.php/index/course/course_update'
         } else {
-          this.condition = {name: name, parent_category: parentCategory, category: category, price: price, class_hour: classHour, cycle_value: cycleValue, cycle_unit: cycleUnit, detail: detail, feature: feature}
+          this.condition = {name: name, parent_category: parentCategory, category: category, price: price, class_hour: classHour, cycle_value: cycleValue, cycle_unit: cycleUnit, feature: feature, feature_service: this.features, image: this.MainHttp, detail: this.TextHttp}
           this.url = 'http://hxb.scpoo.com/hxb/index.php/index/course/course_add'
         }
         axios.post(this.url, this.condition).then((res) => {
@@ -220,6 +265,9 @@
               this.info = res.data.data
               this.cycle_unit = this.info.cycle_unit
               this.category = this.info.category
+              this.features = this.info.feature_service
+              this.MainImg = this.info.image
+              this.TextImg = this.info.detail
               this.parent_category = this.info.parent_category
               if (this.parent_category) {
                 /* 课程分类二级列表 */
@@ -316,9 +364,16 @@
       width: 9rem;
       margin-top: 36px;
       margin-left: 0.5rem;
-      input {
+      .ser {
+        width: 76%;
         display: inline-block;
         height: 120px;
+      }
+      .add {
+        width: 20%;
+        height: 120px;
+        background-color: #2c618b;
+        color: #fff;
       }
     }
     .main_figure {

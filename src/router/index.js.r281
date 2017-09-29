@@ -57,8 +57,6 @@ import ChangePhoneNo from '@/page/school/ChangePhoneNo.vue'
 import RoleInfo from '@/page/school/RoleInfo.vue'
 import TeamInfo from '@/page/school/TeamInfo.vue'
 import AddPeople from '@/page/school/AddPeople.vue'
-import EditTeam from '@/page/school/EditTeam.vue'
-import EditRole from '@/page/school/EditRole.vue'
 
 Vue.use(Router)
 
@@ -110,22 +108,8 @@ export default new Router({
       name: 'SearchList',
       component: SearchList
     },
-    // {
-    //   path: '/NewCurriculum',
-    //   component: NewCurriculum
-    // },
     {
-<<<<<<< .mine
-      path: '/Editor:id',
-||||||| .r262
-      path: '/NewCurriculum',
-      component: NewCurriculum
-    },
-    {
-      path: '/Editor:id',
-=======
       path: '/Editor/:id',
->>>>>>> .r281
       name: 'Editor',
       component: Editor
     },
@@ -308,14 +292,6 @@ export default new Router({
     {
       path: '/AddPeople',
       component: AddPeople
-    },
-    {
-      path: '/EditTeam',
-      component: EditTeam
-    },
-    {
-      path: '/EditRole',
-      component: EditRole
     }
   ]
 })

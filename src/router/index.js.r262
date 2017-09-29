@@ -12,14 +12,6 @@ import CompositeList from '../page/index/CompositeList'
 import Search from '../page/index/Search'
 import SearchList from '../page/index/SearchList'
 import Editor from '../page/index/Editor'
-import PromotionScheme from '../page/extend/PromotionScheme'
-import PlanDetail from '../page/extend/PlanDetail'
-import SetPromotionThreshold from '../page/extend/SetPromotionThreshold'
-import NewPromotionScheme from '../page/extend/NewPromotionScheme'
-import PromotionDetail from '../page/extend/PromotionDetail'
-import ListDetail from '../page/extend/ListDetail'
-import MarketList from '../page/market/MarketList'
-import SceneDetail from '../page/market/SceneDetail'
 import HeaderNav from '../components/HeaderNav'
 import Student from '@/page/student/Student.vue'
 import StuInfo from '@/page/student/StuInfo.vue'
@@ -57,8 +49,6 @@ import ChangePhoneNo from '@/page/school/ChangePhoneNo.vue'
 import RoleInfo from '@/page/school/RoleInfo.vue'
 import TeamInfo from '@/page/school/TeamInfo.vue'
 import AddPeople from '@/page/school/AddPeople.vue'
-import EditTeam from '@/page/school/EditTeam.vue'
-import EditRole from '@/page/school/EditRole.vue'
 
 Vue.use(Router)
 
@@ -89,7 +79,7 @@ export default new Router({
       component: Index
     },
     {
-      path: '/Preview/:id',
+      path: '/Preview:id',
       name: 'Preview',
       component: Preview
     },
@@ -106,60 +96,18 @@ export default new Router({
       component: Search
     },
     {
-      path: '/SearchList/:id',
+      path: '/SearchList:id',
       name: 'SearchList',
       component: SearchList
     },
-    // {
-    //   path: '/NewCurriculum',
-    //   component: NewCurriculum
-    // },
     {
-<<<<<<< .mine
-      path: '/Editor:id',
-||||||| .r262
       path: '/NewCurriculum',
       component: NewCurriculum
     },
     {
       path: '/Editor:id',
-=======
-      path: '/Editor/:id',
->>>>>>> .r281
       name: 'Editor',
       component: Editor
-    },
-    {
-      path: '/PromotionScheme',
-      component: PromotionScheme
-    },
-    {
-      path: '/PlanDetail/:id',
-      component: PlanDetail
-    },
-    {
-      path: '/SetPromotionThreshold',
-      component: SetPromotionThreshold
-    },
-    {
-      path: '/NewPromotionScheme',
-      component: NewPromotionScheme
-    },
-    {
-      path: '/PromotionDetail/:id',
-      component: PromotionDetail
-    },
-    {
-      path: '/ListDetail/:status/:stu_id/:id',
-      component: ListDetail
-    },
-    {
-      path: '/MarketList',
-      component: MarketList
-    },
-    {
-      path: '/SceneDetail',
-      component: SceneDetail
     },
     {
       path: '/nav',
@@ -308,14 +256,6 @@ export default new Router({
     {
       path: '/AddPeople',
       component: AddPeople
-    },
-    {
-      path: '/EditTeam',
-      component: EditTeam
-    },
-    {
-      path: '/EditRole',
-      component: EditRole
     }
   ]
 })

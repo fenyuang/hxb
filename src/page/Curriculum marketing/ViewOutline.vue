@@ -7,7 +7,7 @@
 
       <li class="margin"  v-for="(list, index) in viewlist">
         <div class="unitImg">
-          <img :src="`../../../static/images/unit${index-1}.png`"/>
+          <img :src="`../../../static/images/unit${index}.png`"/>
         </div>
         <ul class="text">
           <li class="text_title"> {{list.name}} </li>

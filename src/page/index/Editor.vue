@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<header>
-			<a class="back">< 返回</a>
+			<a class="back" @tap.stop='back'>< 返回</a>
 			<span>{{ pageIndex + 1 }}/{{ pageCount }}</span>
 			<a class="preserve" @tap.stop='preserve'>预览 ></a>
 		</header>
@@ -227,6 +227,9 @@ export default {
       this.attributeShow = false
       this.footerShow = true
       this.textareaValue = []
+    },
+    back () {
+      window.history.back()
     },
     preserve () {
       this.layer = true

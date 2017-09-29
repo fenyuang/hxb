@@ -130,7 +130,7 @@
       }
     }
     .add_btn {
-      position: absolute;
+      position: fixed;
       right: 2%;
       bottom: 13%;
       z-index: 2000;

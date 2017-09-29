@@ -298,6 +298,7 @@
 <style scoped lang="less">
   .grop {
     background-color: #fff;
+    overflow: hidden;
     .add_btn {
       position: fixed;
       right: 2%;
@@ -414,13 +415,13 @@
         width: 100%;
         height: 180px;
         border-bottom: 1px solid #eeeeee;
+        overflow: hidden;
         .Info_name {
           float: left;
           width: 22%;
           border-right:1px solid #eeeeee ;
           text-align: center;
           vertical-align: middle;
-          overflow: hidden;
           .Info_name_NM {
             margin-top: 16%;
           }
@@ -444,7 +445,6 @@
           float: left;
           width: 74%;
           margin-left: 4%;
-          overflow: hidden;
           line-height: 54px;
           position: relative;
           .Info_message_num {

@@ -68,19 +68,14 @@ export default {
             this.HotSearch = msg.data.data
           }
         })
-        .catch(err => {
-          console.log(err)
-        })
     },
     getUserSearch () {
       axios.get('http://hxb.scpoo.com/hxb/index.php/api/index/getUserSearch')
         .then(msg => {
-          console.log(msg)
           if (msg.data.code === 1 && msg.data.data.length > 0) {
             this.UserSearch = msg.data.data
             this.seen = true
           }
-          console.log(this.UserSearch)
         })
     },
     deleteUserSearch () {
@@ -96,7 +91,6 @@ export default {
       this.$set(this.userSearchValue, 0, this.userSearchValue[0])
     },
     gotoUserSearch () {
-      console.log(String.trim(document.querySelector('#search').value).length)
       if (document.querySelector('.userSearch') && String.trim(document.querySelector('#search').value).length > 0) {
         document.querySelector('.userSearch').click()
       } else {

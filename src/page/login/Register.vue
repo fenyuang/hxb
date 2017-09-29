@@ -12,11 +12,9 @@
 		</div>
 		<div class="mui-input-row">
 			<input type="text" ref="messageCode"  placeholder="请输入短信验证码">
-			<button id="get_code" @click="gainTelPhone" ref="getTelCode" :disabled="time > 0 ? true : false">获取验证码</button >
+			<button id="get_code" @tap="gainTelPhone" ref="getTelCode" :disabled="time > 0 ? true : false">获取验证码</button >
 		</div>
-		
-		<span class="errorRegister" ref="errorRegister" v-show="errorRegister"></span>
-		
+				
 		<div class="mui-input-row margin-pass">
 			<input type="password" class="mui-input-password" ref="getPassword" placeholder="请输入密码(建议6-20个字符)">
 			<span class="mui-icon mui-icon-eye"></span>
@@ -30,11 +28,10 @@
 			<label>我已阅读并接受</label>
 			<router-link class="protocol" to='/Protocol'>惠学宝用户协议</router-link> 
 		</div>
-		<button type="button" class="mui-btn mui-btn-block register-btn" @click="signup">注册</button>
-		<router-link class="toFoundSchool" to='/FoundSchool'></router-link>
+		<button type="button" class="mui-btn mui-btn-block register-btn" @tap="signup">注册</button>
 		<div class="login">
 			<label>已有账号？</label>
-			<router-link class="goLogin" to='/'>马上登陆</router-link> 
+			<router-link class="goLogin" to='/'>马上登录</router-link> 
 		</div>
 		
 		<div class="layer" v-show="layer"></div>
@@ -85,18 +82,18 @@ export default {
             }
           })
       } else {
-        this.errorRegister = true
-        this.$refs.errorRegister.innerHTML = '*请输入正确的手机号'
-        setTimeout(this.errorRegisterHide, 3000)
+        this.layer = true
+        this.$refs.layer.innerHTML = '*请输入正确的手机号'
+        setTimeout(this.errorLayer, 3000)
       }
     },
     sendVerCode () {
       axios.get('http://hxb.scpoo.com/hxb/index.php/api/user/sendVerCode?tel=' + this.tel)
         .then(msg => {
           if (msg.data.code === 1) {
-            this.errorRegister = true
-            this.$refs.errorRegister.innerHTML = msg.data.message
-            setTimeout(this.errorRegisterHide, 3000)
+            this.layer = true
+            this.$refs.layer.innerHTML = msg.data.message
+            setTimeout(this.errorLayer, 2000)
             this.time = this.second
             this.timer()
           }
@@ -111,18 +108,18 @@ export default {
     },
     getPassword () {
       if (this.$refs.getPassword.value.length < 6) {
-        this.errorRegister = true
-        this.$refs.errorRegister.innerHTML = '*请输入大于6位数的密码'
-        setTimeout(this.errorRegisterHide, 3000)
+        this.layer = true
+        this.$refs.layer.innerHTML = '*请输入大于6位数的密码'
+        setTimeout(this.errorLayer, 2000)
         return false
       }
       return true
     },
     relPassword () {
       if (this.$refs.getPassword.value !== this.$refs.relPassword.value) {
-        this.errorRegister = true
-        this.$refs.errorRegister.innerHTML = '*请输入相同的密码'
-        setTimeout(this.errorRegisterHide, 3000)
+        this.layer = true
+        this.$refs.layer.innerHTML = '*请输入相同的密码'
+        setTimeout(this.errorLayer, 2000)
         return false
       }
       return true
@@ -138,37 +135,37 @@ export default {
             cupassword: this.$refs.relPassword.value
           })
             .then(msg => {
-              console.log(msg)
               if (msg.data.code === 1) {
+                this.$refs.layer.innerHTML = msg.data.message
                 this.layer = true
                 setTimeout(this.layerHide, 2000)
               } else {
-                this.errorRegister = true
-                this.$refs.errorRegister.innerHTML = '*' + msg.data.message
-                setTimeout(this.layerHide, 3000)
+                this.layer = true
+                this.$refs.layer.innerHTML = '*' + msg.data.message
+                setTimeout(this.errorLayer, 2000)
               }
             })
         }
       }
     },
-    errorRegisterHide () {
-      this.errorRegister = false
+    errorLayer () {
+      this.layer = false
     },
     layerHide () {
-      document.querySelector('.toFoundSchool').click()
+      this.$router.push('/FoundSchool')
     },
     goLogin () {
-      document.querySelector('.goLogin').click()
+      this.$router.push('/Login')
     }
   }
 }
 </script>
 
 <style scoped>
-	button { padding: 0;}
+	button { padding: 0; border: 0;}
 	a { color: #185e96;}
 	input { border: 0;}
-	.mui-input-row { width: 9rem; height: 1.5rem; line-height: 1.5rem; margin: 0 auto;}
+	.mui-input-row { width: 9rem; height: 1.5rem; line-height: 1.5rem; margin: 0.1rem auto;}
 	.mui-input-row input { height: 1.5rem; line-height: 1.5rem; font-size: 0.4rem;}
 	.mui-input-row .mui-input-clear~.mui-icon-clear, .mui-input-row .mui-input-password~.mui-icon-eye, .mui-input-row .mui-input-speech~.mui-icon-speech { width: 0.4rem; height: 0.4rem; top: 0.55rem; right: 0.55rem;}
 	#get_code { position: absolute; top: 0.15rem; right: 0.2rem; background: #97ca76; color: #fff; font-size: 0.4rem; height: 1.2rem; line-height: 1.2rem; width: 3rem; text-align: center; border-radius: 7px; display: inline-block;}
@@ -181,7 +178,6 @@ export default {
 	.get-code { background: #333; overflow: hidden; position: absolute; top: 0.1rem; right: 0.15rem;}
 	.login { float: right; margin-right: 0.5rem; font-size: 0.4rem; height: 0.8rem; line-height: 0.8rem;}
 	
-	.errorRegister { margin-left: 0.5rem; color: #FF0000; position: absolute;}
 	.layer { position: absolute; width: 8rem; height: 2rem; top: 8rem; left: 10%; background: #000; opacity: 0.6; border-radius: 0.2rem;}
 	.layer-floor {  position: absolute; top: 8rem; left: 1rem; z-index: 999; color: #fff; width: 8rem; height: 2rem; border-radius: 10px; line-height: 2rem; font-size: 0.5rem; text-align: center;}
 </style>

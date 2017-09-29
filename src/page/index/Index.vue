@@ -129,17 +129,17 @@ export default {
         })
     },
     preview (index) {
-      this.$router.push('/Preview' + this.imgHtmlId[index])
+      this.$router.push('/Preview/' + this.imgHtmlId[index])
     },
     editor (index) {
-      this.$router.push('/Editor' + this.imgHtmlId[index])
+      this.$router.push('/Editor/' + this.imgHtmlId[index])
     },
     clickSee (index) {
       if (!this.dataType[index]) {
         for (let i = 0; i < this.dataType.length; i++) {
           this.dataType[i] = false
         }
-        this.$set(this.dataType, index, !this.dataType[index].seen)
+        this.$set(this.dataType, index, !this.dataType[index])
       } else {
         this.$set(this.dataType, index, false)
       }

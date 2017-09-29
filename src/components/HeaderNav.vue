@@ -35,7 +35,7 @@
               <li class="curriculum_marketing">
                 <a class="curriculum_marketing_text">学校控制台</a>
               </li>
-              <li class="curriculum_marketing">
+              <li class="curriculum_marketing" @tap="market">
                 <a class="curriculum_marketing_text">市场推广</a>
               </li>
               <li class="curriculum_marketing" @tap="Conversion">
@@ -44,7 +44,7 @@
               <li class="curriculum_marketing" @tap="curric">
                 <a class="curriculum_marketing_text">课程营销</a>
               </li>
-              <li class="curriculum_marketing">
+              <li class="curriculum_marketing" @tap="extend">
                 <a class="curriculum_marketing_text">推广员</a>
               </li>
               <li class="curriculum_marketing" @tap="lineStu">
@@ -118,6 +118,12 @@
       },
       lineSchInfo () {
         this.$router.push('/SchInfo')
+      },
+      market () {
+        this.$router.push('/MarketList')
+      },
+      extend () {
+        this.$router.push('/PromotionScheme')
       }
     }
   }

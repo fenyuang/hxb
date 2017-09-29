@@ -9,31 +9,44 @@
 			<input type="password" ref="password" required="required" class="mui-input-password" placeholder="请输入登录密码">
 			<span class="mui-icon mui-icon-eye"></span>
 		</div>
-		<span class="errorLogin" v-if="errorLogin">账号密码不匹配，请重新输入</span>
-		<router-link class="modify-password" to='/ModifyPassword'>忘记密码</router-link> 
+		<router-link class="modify-password" to='/ModifyPassword'>忘记密码</router-link>
 		<li @tap="login">
 			<button type="button" class="mui-btn mui-btn-block login-btn">登录</button>
 		</li>
-		<router-link class="login" to='/Index'></router-link>
 		<div class="mui-checkbox">
 			<input class="checkbox" type="checkbox" checked>
 			<label>下次自动登录</label>
-			<router-link class="register" to='/Register'>免费注册</router-link> 
+			<router-link class="register" to='/Register'>免费注册</router-link>
 		</div>
+
+		<!--<div class="layer" v-show="layer"></div>-->
+		<!--<div class="layer-floor" ref="layer" v-show="layer">账号密码不匹配...</div>-->
+    <PopupHint   :Content="pop"  v-if="layer === 1"></PopupHint>
 	</div>
 </template>
 
 <script>
 import LoginLogo from '../../components/login/LoginLogo.vue'
+import PopupHint from '../../components/PopupHint'
 import axios from 'axios'
 export default {
   data () {
     return {
-      errorLogin: false
+      layer: 0,
+      pop: ''
     }
   },
   components: {
-    LoginLogo
+    LoginLogo, PopupHint
+  },
+  watch: {
+    layer (newVal, oldVal) {
+      if (this.layer === 1) {
+        setTimeout(() => {
+          this.layer = 0
+        }, 2000)
+      }
+    }
   },
   methods: {
     login () {
@@ -43,11 +56,21 @@ export default {
       })
         .then(msg => {
           if (msg.data.code === 1) {
-            document.querySelector('.login').click()
+            if (msg.data.data.shool_name !== null) {
+              this.$router.push('/Index')
+            } else {
+              this.$router.push('/FoundSchool')
+            }
           } else {
-            this.errorLogin = true
+//            this.$refs.layer.innerHTML = '*' + msg.data.message
+            this.layer = 1
+            this.pop = msg.data.message
+//            setTimeout(this.errorLayer, 2000)
           }
         })
+    },
+    errorLayer () {
+      this.layer = false
     }
   }
 }
@@ -67,5 +90,7 @@ export default {
 	.mui-checkbox label { width: 5rem; font-size: 0.4rem; padding-left: 1rem; padding-right: 0; height: 1rem; line-height: 1rem;}
 	.mui-checkbox .register { height: 1rem; line-height: 1rem; position: absolute; color: #185e96; right: 0.5rem; font-size: 0.4rem;}
 	.mui-checkbox input[type=checkbox]:checked:before { color: #185e96;}
-	.errorLogin { margin-left: 0.5rem; color: #FF0000; position: absolute;}
+
+	.layer { position: absolute; width: 8rem; height: 2rem; top: 6rem; left: 10%; background: #000; opacity: 0.6; border-radius: 0.2rem;}
+	.layer-floor {  position: absolute; top: 6rem; left: 1rem; z-index: 999; color: #fff; width: 8rem; height: 2rem; border-radius: 10px; line-height: 2rem; font-size: 0.5rem; text-align: center;}
 </style>

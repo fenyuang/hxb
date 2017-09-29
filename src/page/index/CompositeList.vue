@@ -177,10 +177,10 @@ export default {
         })
     },
     preview (index) {
-      this.$router.push('/Preview' + this.imgHtmlId[index])
+      this.$router.push('/Preview/' + this.imgHtmlId[index])
     },
     editor (index) {
-      this.$router.push('/Editor' + this.imgHtmlId[index])
+      this.$router.push('/Editor/' + this.imgHtmlId[index])
     },
     clickSee (index) {
       if (!this.dataType[index]) {

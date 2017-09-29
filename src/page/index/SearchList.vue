@@ -76,7 +76,6 @@ export default {
     getSearchList () {
       axios.get('http://hxb.scpoo.com/hxb/index.php/api/index/getapps?keywords=' + this.$router.currentRoute.params.id)
         .then(msg => {
-          console.log(msg)
           this.SerchKeyword[0] = this.$router.currentRoute.params.id
           if (msg.data.code === 1) {
             this.notSearchShow = false
@@ -92,10 +91,10 @@ export default {
         })
     },
     preview (index) {
-      this.$router.push('/Preview' + this.imgHtmlId[index])
+      this.$router.push('/Preview/' + this.imgHtmlId[index])
     },
     editor (index) {
-      this.$router.push('/Editor' + this.imgHtmlId[index])
+      this.$router.push('/Editor/' + this.imgHtmlId[index])
     },
     getAppListH5 (type) {
       axios.get('http://hxb.scpoo.com/hxb/index.php/api/index/getapps', {
@@ -127,7 +126,6 @@ export default {
     getUserChangeSearch () {
       this.SerchKeyword[0] = String.trim(this.$refs.searchTip.value)
       this.$set(this.SerchKeyword, 0, String.trim(this.$refs.searchTip.value))
-      console.log(this.SerchKeyword)
     },
     gotoUserSearch () {
       this.getUserChangeSearch()
