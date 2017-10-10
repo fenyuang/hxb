@@ -1,35 +1,35 @@
 <template>
-	<div>
+	<div @tap.stop='cancelEdito'>
 		<header>
 			<a class="back" @tap.stop='back'>< 返回</a>
 			<span>{{ pageIndex + 1 }}/{{ pageCount }}</span>
-			<a class="preserve" @tap.stop='preserve'>预览 ></a>
+			<a class="preserve" @tap.stop='preserve'>保存 ></a>
 		</header>
 		
-		<div class="mui-slider" id="mui-slider-editor" @tap.stop='cancelEdito'>
-		  <div class="mui-slider-group">
-		    <div class="mui-slider-item" v-for="condata in conData">
+		<section class="swiper">
+			<wc-swiper v-if="conData.length" class="wc-swipe" :autoplay="false" @transitionend="pageInd">
+		    <wc-slide v-for="(condata, key) in conData" :key="key">
 		    	<div class="item-con" :style="{backgroundColor: condata.background_color}">
 		    		<div v-for="item in condata.elements">
 		    			<div v-if="item">
 		    				<div v-if="item.type === 'text'">
 		    					<p style="position: absolute;" :style="{ backgroundColor: item.backgroundColor, 
-  														 color: item.color, 
-  														 fontFamily: item.fontFamily, 
-  														 fontWeight: item.fontWeight,
-  														 fontSize: item.fontSize + 'px',
-  														 height: item.height + 'px',
-  														 width: item.width + 'px',
-  														 left: item.left + 'px',
-  														 top: item.top + 'px',
-  														 lineHeight: item.lineHeight,
-  														 textAlign: item.textAlign,
-  														 opacity: item.opacity,
-  														 animation: item.animation,
-  														 animationName: item.animatedName,
-  														 animationDelay: item.deley + 's',
-  														 animationDuration: item.duration + 's',
-  														 zIndex: item.zindex }" @tap.stop='editoEle(item)'>{{ item.text }}</p>
+															 color: item.color, 
+															 fontFamily: item.fontFamily, 
+															 fontWeight: item.fontWeight,
+															 fontSize: item.fontSize + 'px',
+															 height: item.height + 'px',
+															 width: item.width + 'px',
+															 left: item.left + 'px',
+															 top: item.top + 'px',
+															 lineHeight: item.lineHeight,
+															 textAlign: item.textAlign,
+															 opacity: item.opacity,
+															 animation: item.animation,
+															 animationName: item.animatedName,
+															 animationDelay: item.deley + 's',
+															 animationDuration: item.duration + 's',
+															 zIndex: item.zindex }" @tap.stop='editoEle(item)'>{{ item.text }}</p>
 		    				</div>
 		    				<div v-else-if="item.type === 'pic'">
 		    					<img v-bind:style="{ backgroundColor: item.backgroundColor, 
@@ -43,6 +43,9 @@
 			    														 lineHeight: item.lineHeight + 'px',
 			    														 textAlign: item.textAlign,
 			    														 zIndex: item.zindex }" :src="item.imgSrc" @tap.stop='editoEle(item)' style="position: absolute;">
+		    				</div>
+		    				<div v-else-if="item.type === 'bg'">
+		    					<img style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;" :src=" item.imgSrc ">
 		    				</div>
 		    				<div v-html="item.html" v-else-if="item.type === 'form'">
 		    					<div :style="{ backgroundColor: item.backgroundColor, 
@@ -66,9 +69,10 @@
 		    			</div>
 		    		</div>
 		    	</div>
-		    </div>
-		  </div>
-		</div>
+		    </wc-slide>
+			</wc-swiper>
+		</section>
+			
 		
 		<section v-show="panelShow" class="text-panel">
 			<div class="mui-content">
@@ -114,7 +118,6 @@
 		
 		<div class="layer" v-show="layer"></div>
 		<div class="layer-floor" ref="layer" v-show="layer">正在保存...</div>
-		<a class="toPreview" @tap="routeToPreview"></a>
 	</div>
 </template>
 
@@ -125,7 +128,7 @@ export default {
   data () {
     return {
       msgData: {},
-      conData: [1, 2],
+      conData: [],
       pageCount: 0,
       pageIndex: 0,
       panelShow: false,
@@ -146,23 +149,16 @@ export default {
     }
   },
   mounted () {
-    document.querySelector('.mui-slider-group').style.height = window.innerHeight * 0.8 + 'px'
-    document.querySelector('.mui-slider-group').style.marginTop = window.innerHeight * 0.1 + 'px'
-    document.querySelector('.mui-slider-group').style.marginBottom = window.innerHeight * 0.1 + 'px'
-    console.log(this.$router.currentRoute.params.id)
     axios.get('http://hxb.scpoo.com/hxb/index.php/api/editor/getpage?id=' + this.$router.currentRoute.params.id + '&loginId=' + '13169731844')
       .then(msg => {
-        console.log(msg)
         this.msgData = msg.data.data
         this.conData = this.msgData.pages
         this.pageCount = msg.data.data.pages.length
-        console.log(this.msgData)
-        console.log(111)
         console.log(this.conData)
       })
-    document.querySelector('.mui-slider').addEventListener('slide', event => {
-      this.pageIndex = event.detail.slideNumber
-    })
+    document.querySelector('.swiper').style.height = window.innerHeight * 0.8 + 'px'
+    document.querySelector('.swiper').style.marginTop = window.innerHeight * 0.1 + 'px'
+    document.querySelector('.swiper').style.marginBottom = window.innerHeight * 0.1 + 'px'
   },
   methods: {
     editoEle (ele) {
@@ -228,6 +224,9 @@ export default {
       this.footerShow = true
       this.textareaValue = []
     },
+    pageInd (currentSlide) {
+      this.pageIndex = currentSlide
+    },
     back () {
       window.history.back()
     },
@@ -252,12 +251,11 @@ export default {
       })
         .then(msg => {
           this.$refs.layer.innerHTML = '保存成功...'
-          setTimeout(this.routeToPreview, 2000)
+          setTimeout(this.routeToPromotionSetting, 2000)
         })
     },
-    routeToPreview () {
-      this.$router.push('/Preview' + this.msgData._id.$id)
-      $('.toPreview').click()
+    routeToPromotionSetting () {
+      this.$router.push('/PromotionSetting/' + this.msgData._id.$id)
     }
   },
   watch: {
@@ -279,7 +277,7 @@ export default {
 	header .preserve { color: #fff; font-size: 0.4rem; height: 1.2rem; line-height: 1.2rem; width: 2rem; text-align: center; display: inline-block; float: right;}
 	
 	/*编辑框*/
-	.mui-slider { background: #333;}
+	.wc-swipe { height: 100%;}
 	.item-con { width: 8rem; left: 1rem; margin-right: 1rem; float: left; height: inherit; margin: 0 auto; background: #fff; position: relative; overflow: hidden;}
 	
 	/*编辑面板*/

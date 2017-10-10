@@ -33,16 +33,9 @@ export default {
         school_name: this.$refs.school_name.value
       })
         .then(msg => {
-          console.log(msg)
-          if (msg.data.error_code === 0) {
-            this.$refs.layer.innerHTML = msg.data.message
-            this.layer = true
-            setTimeout(this.Index, 2000)
-          } else {
-            this.layer = true
-            this.$refs.layer.innerHTML = '*' + msg.data.message
-            setTimeout(this.errorLayer, 2000)
-          }
+          this.layer = true
+          this.$refs.layer.innerHTML = '*' + msg.data.message
+          setTimeout(this.Index, 2000)
         })
     },
     Index () {

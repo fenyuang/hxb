@@ -5,7 +5,7 @@ export default {
   editEle ({commit}, obj) {
     commit('EDIT_ELE', obj)
   },
-  changeStyle ({commit}, data) {
-    commit('CHANG_STYLE', data)
+  changeImgSrc ({commit}, data) {
+    commit('CHANGE_IMG_SRC', data)
   }
 }

@@ -1,30 +1,29 @@
 <template>
 	<HeaderNav :classify=1 :searchIcon=1>
-		<div class="mui-slider" id="mui-slider-index">
-	  	<div class="mui-slider-group mui-slider-loop">
-		    <!--支持循环，需要重复图片节点-->
-		    <div class="mui-slider-item mui-slider-item-duplicate"><a><img src="../../../static/images/banner01.png" /></a></div>
-		    <div class="mui-slider-item"><a><img src="../../../static/images/banner01.png" /></a></div>
-		    <div class="mui-slider-item"><a><img src="../../../static/images/banner01.png" /></a></div>
-		    <div class="mui-slider-item"><a><img src="../../../static/images/banner01.png" /></a></div>
-		    <div class="mui-slider-item"><a><img src="../../../static/images/banner01.png" /></a></div>
-		    <!--支持循环，需要重复图片节点-->
-		    <div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="../../../static/images/banner01.png" /></a></div>
-		 	</div>
-		</div>
+		<wc-swiper :duration="2000">
+	  	<wc-slide class="swiper">
+		    <img src="../../../static/images/banner01.png" />
+		 	</wc-slide>
+		 	<wc-slide class="swiper">
+		    <img src="../../../static/images/banner01.png" />
+		 	</wc-slide>
+		 	<wc-slide class="swiper">
+		    <img src="../../../static/images/banner01.png" />
+		 	</wc-slide>
+		</wc-swiper>
 		
 		<div class="mui-content bg-white">
 			<div class="mui-segmented-control">
-				<li class="control-item" @tap="getAppListH5('h5')">
+				<li class="control-item" :class="{ active: isActive[0] }" @tap="getAppListH5('h5', 0)">
 					微场景
 				</li>
-				<li class="control-item" @tap="getAppListH5('spa')">
+				<li class="control-item" :class="{ active: isActive[1] }" @tap="getAppListH5('spa', 1)">
 					微网页
 				</li>
-				<li class="control-item" @tap="getAppListH5('wpa')">
+				<li class="control-item" :class="{ active: isActive[2] }" @tap="getAppListH5('wpa', 2)">
 					微信图文
 				</li>
-				<li class="control-item" @tap="getAppListH5('web')">
+				<li class="control-item" :class="{ active: isActive[3] }" @tap="getAppListH5('web', 3)">
 					学校官网
 				</li>
 			</div>
@@ -63,7 +62,8 @@ export default {
       dataType: [],
       imgLength: [],
       dataLength: [],
-      allMsgData: []
+      allMsgData: [],
+      isActive: [false, false, false, false]
     }
   },
   components: {
@@ -98,7 +98,11 @@ export default {
     window.addEventListener('touchmove', this.addImgHtml)
   },
   methods: {
-    getAppListH5 (type) {
+    getAppListH5 (type, activeId) {
+      for (let i = 0; i < this.isActive.length; i++) {
+        this.isActive[i] = false
+      }
+      this.isActive[activeId] = true
       axios.get('http://hxb.scpoo.com/hxb/index.php/api/index/getapps', {
         type: type
       })
@@ -170,11 +174,15 @@ export default {
 </script>
 
 <style scoped>
+	/*轮播*/
+	.swiper img { width: 100%;}
+	
 	.bg-white { background: white;}
 	.mui-content.bg-white { padding-top: 0 !important;}
 	.mui-segmented-control { border-radius: 0; border: 0;}
 	.mui-segmented-control .control-item { border-left: 0; color: #666; font-size: 0.5rem; line-height: 1.2rem; display: table-cell; overflow: hidden; text-align: center; width: 25%;}
 	.mui-segmented-control .control-item.mui-active { background: none; color: rgb(2, 114, 218); border-bottom: 1px solid rgb(2, 114, 218);}
+	.control-item.active { color: #2c618b; border-bottom: 2px solid #2c618b;}
 	
 	/*应用列表样式*/
 	.mui-table-view.mui-grid-view { padding: 0; background: #f2f2f2;}

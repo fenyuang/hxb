@@ -12,11 +12,11 @@
 			</div>
 			<div class="count-con">
 				<div class="left-con con">
-					<h3>999,9</h3>
+					<h3>{{ detailData.pv }}</h3>
 					<p>页面PV</p>
 				</div>
 				<div class="right-con con">
-					<h3>199</h3>
+					<h3>{{ detailData.uv }}</h3>
 					<p>页面UV</p>
 				</div>
 			</div>
@@ -24,7 +24,39 @@
 		
 		<section class="count bg-white">
 			<div class="title">
-				<p>效果统计</p>
+				<p>表单统计</p>
+				<span>共2条记录</span>
+			</div>
+			<div class="table-count">
+				<div class="tab-con">
+					<div class="tab-left">
+						姓名
+					</div>
+					<div class="tab-cen">
+						电话号码
+					</div>
+					<div class="tab-rig">
+						提交时间
+					</div>
+				</div>
+				<div class="tab-con" v-for="data in detailData.form_list">
+					<div class="tab-left">
+						{{ data.name }}
+					</div>
+					<div class="tab-cen">
+						{{ data.tel }}
+					</div>
+					<div class="tab-rig">
+						{{ data.reg_time }}
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<section class="count bg-white">
+			<div class="title">
+				<p>社交分享</p>
+				<span class="share"><img src="../../../static/images/share.png" />分享</span>
 			</div>
 		</section>
 	</HeaderNav>
@@ -32,9 +64,22 @@
 
 <script>
 import HeaderNav from '../../components/HeaderNav'
+import axios from 'axios'
 export default {
   components: {
     HeaderNav
+  },
+  mounted () {
+    axios.get('http://hxb.scpoo.com/hxb/index.php/index/Promotion/UseDetail?id=' + this.$router.currentRoute.params.id + '&type=h5')
+      .then(msg => {
+        console.log(msg)
+        this.detailData = msg.data.data
+      })
+  },
+  data () {
+    return {
+      detailData: {}
+    }
   }
 }
 </script>
@@ -54,4 +99,14 @@ export default {
 	.count-con .con p { text-align: center; font-size: 0.4rem; height: 0.8rem; line-height: 0.8rem; color: #333333;}
 	.count-con .left-con {  border: 8px solid #2c618b;}
 	.count-con .right-con {  border: 8px solid #53bfdc;} 
+	
+	/*表单统计*/
+	.title span { float: right; padding-right: 0.5rem; font-size: 0.4rem; color: #666666;}
+	.table-count { display: table; border-collapse: collapse;}
+	.tab-con { display: table-row; text-align: center; height: 1.2rem; line-height: 1.2rem; font-size: 0.4rem; border-top: 2px solid #EEEEEE;}
+	.tab-con .tab-left { display: table-cell; width: 2.5rem; padding-left: 0.5rem; border-right: 2px solid #EEEEEE;}
+	.tab-con .tab-cen { display: table-cell; width: 4rem; border-right: 2px solid #EEEEEE;}
+	.tab-con .tab-rig { display: table-cell; width: 3.5rem;}
+	
+	.title .share img { width: 0.6rem; height: 0.6rem; margin-right: 0.2rem; vertical-align: middle;}
 </style>

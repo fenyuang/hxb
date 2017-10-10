@@ -36,9 +36,6 @@ export default {
   components: {
     HeaderNav
   },
-  mounted () {
-    axios.post('#2c618b')
-  },
   data () {
     return {
       check: [true, false, false],

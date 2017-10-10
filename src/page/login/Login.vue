@@ -56,22 +56,26 @@ export default {
       })
         .then(msg => {
           if (msg.data.code === 1) {
+            sessionStorage.token = msg.data.data.token
             if (msg.data.data.shool_name !== null) {
               this.$router.push('/Index')
             } else {
               this.$router.push('/FoundSchool')
             }
           } else {
-//            this.$refs.layer.innerHTML = '*' + msg.data.message
             this.layer = 1
             this.pop = msg.data.message
-//            setTimeout(this.errorLayer, 2000)
           }
         })
     },
-    errorLayer () {
-      this.layer = false
+    isLogin () {
+      if (sessionStorage.token) {
+        this.$router.push('/Index')
+      }
     }
+  },
+  created () {
+    this.isLogin()
   }
 }
 </script>

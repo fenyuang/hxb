@@ -6,8 +6,8 @@
         <div class="mui-scroll">
 
           <!--未登录状态-->
-         <div v-if="login">
-           <div class="login_header_img">
+         <div v-if="login === 1">
+           <div class="login_header_img" @tap="LineLogin">
              <img src="../../static/images/head.png"/>
              <p class="login_regist">登录/注册</p>
            </div>
@@ -15,14 +15,14 @@
              <li class="curriculum_marketing">
                <a class="curriculum_marketing_text">课程营销</a>
              </li>
-             <li class="curriculum_marketing">
+             <!--<li class="curriculum_marketing">
                <a class="curriculum_marketing_text">学校控制台</a>
-             </li>
+             </li>-->
            </ul>
          </div>
 
           <!--已登录状态-->
-          <div>
+          <div v-if="login === 0">
             <div class="login_header_img">
               <img src="../../static/images/head.png"/>
               <p class="login_regist">学校名称</p>
@@ -32,9 +32,9 @@
               <li class="curriculum_marketing" @tap="index">
                 <a class="curriculum_marketing_text">首页</a>
               </li>
-              <li class="curriculum_marketing">
+              <!--<li class="curriculum_marketing">
                 <a class="curriculum_marketing_text">学校控制台</a>
-              </li>
+              </li>-->
               <li class="curriculum_marketing" @tap="market">
                 <a class="curriculum_marketing_text">市场推广</a>
               </li>
@@ -53,7 +53,7 @@
               <li class="curriculum_marketing" @tap="lineSchInfo">
                 <a class="curriculum_marketing_text">学校设置</a>
               </li>
-              <li class="curriculum_marketing sign_out">
+              <li class="curriculum_marketing sign_out" @tap="LoginOut">
                 <a class="curriculum_marketing_text">退出登录</a>
               </li>
             </ul>
@@ -72,9 +72,9 @@
 
       </header>
       <div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper" style="overflow: auto;">
-				
+
         	<slot></slot>
-				
+
       </div>
       <div class="mui-off-canvas-backdrop"></div>
     </div>
@@ -84,7 +84,7 @@
   export default {
     data () {
       return {
-        login: false
+        login: 0
       }
     },
     props: {
@@ -98,6 +98,9 @@
       }
     },
     methods: {
+      LineLogin () {
+        this.$router.push('/')
+      },
       search () {
         this.$router.push('/Search')
       },
@@ -124,6 +127,10 @@
       },
       extend () {
         this.$router.push('/PromotionScheme')
+      },
+      LoginOut () {
+        sessionStorage.token = ''
+        this.login = 1
       }
     }
   }
